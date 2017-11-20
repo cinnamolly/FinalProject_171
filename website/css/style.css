@@ -1,0 +1,25 @@
+
+body{
+    background-color: #cccccc;
+    text-align: center;
+    font-family: "Lucida Grande";
+
+}
+
+
+h1{
+    padding-left: 15px;
+    font-family: "Lucida Grande";
+}
+
+
+p{
+    font-family: "Lucida Grande";
+    font-size:16px;
+    font-weight:bolder;
+}
+
+
+.col-md-4, .col-md-6, .col-md-12{
+    height: 100px;
+}
