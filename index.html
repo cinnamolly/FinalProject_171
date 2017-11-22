@@ -29,7 +29,9 @@
 	<div class = "row-fluid">
 		<div class= "col-md-6">
 			<h4>Visual: Choropleth</h4>
-			<div class = "choropleth"></div>
+			<div class = "choropleth">
+				<div id="choro"></div>
+			</div>
 		</div>
 		<div class= "col-md-6 text">
 			<h5>Text: Notable observations on choropleth data</h5>
@@ -80,10 +82,13 @@
 	<!-- Load JS libraries -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/queue.min.js"></script>
+	<script src="js/topojson.min.js"></script>
 	<script src="js/d3.js"></script>
 
 	<!-- Visualization objects -->
 	<script src="js/stackedAreaChart.js"></script>
+	<script src="js/americaClimate.js"></script>
 	<script src="js/timeline.js"></script>
 
 	<!-- Load data, create visualizations -->

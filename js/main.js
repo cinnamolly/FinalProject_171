@@ -13,7 +13,7 @@ var parseDate = d3.timeParse("%Y");
 var colorScale = d3.scaleOrdinal(["#152394","#06a7a4", "#d82492"]).domain(["tornado", "hail", "wind"]);
 
 // Variables for the visualization instances
-var areachart, timeline;
+var areachart, timeline, climate;
 
 
 // Start application by loading the data
@@ -35,6 +35,7 @@ function loadCsvData(){
 function createVis() {
 
 	// TO-DO: Instantiate visualization objects here
+    //climate = new ChoroplethMap("choro");
     areachart = new StackedAreaChart("stacked-area-chart", allData);
 
     timeline = new Timeline("timeline", allData);
