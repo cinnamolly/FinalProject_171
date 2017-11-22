@@ -1,63 +1,45 @@
-
-
-/*
- * ChoroplethMap - Object constructor function
- * @param _parentElement 	-- the HTML element in which to draw the visualization
- * @param _data						-- the
- */
-//
-// ChoroplethMap = function(_parentElement){
-//     this.parentElement = _parentElement;
-//     this.displayData = []; // see data wrangling
-//
-//     // DEBUG RAW DATA
-//     console.log(this.data);
-//
-//     this.initVis();
-// }
-//
-//
-//
-// /*
-//  * Initialize visualization (static content, e.g. SVG area or axes)
-//  */
-//
-// ChoroplethMap.prototype.initVis = function(){
-    //var vis = this;
-
 var margin = { top: 0, right: 0, bottom: 0, left: 60 };
-var america;
- var width = 800 - margin.left - margin.right;
- var height = 400 - margin.top - margin.bottom;
+var america, climateData;
+var width = 800 - margin.left - margin.right;
+var height = 400 - margin.top - margin.bottom;
 
-    // SVG drawing area
-    var svg = d3.select("#choro").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// SVG drawing area
 
-    var projection = d3.geoMercator()
-        .translate([width / 2, height / 2]);
+var states_alpha = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida",
+    "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa", "Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts",
+    "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
+    "New York","North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
+    "South Dakota","Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"];
+var svg = d3.select("#choro").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var path = d3.geoPath()
-        .projection(scale(0.4,width,height))
-        //.projection(projection);
-//projection.center();
-    //projection.scale(300);
-    // TO-DO: Stacked area layout
-    // TO-DO: (Filter, aggregate, modify data)
-d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
-    if (error) throw error;
+var projection = d3.geoMercator()
+    .translate([width / 2, height / 2]);
 
-    svg.append("g")
-        .attr("class", "states")
-        .selectAll("path")
-        .data(topojson.feature(us, us.objects.states).features)
-        .enter().append("path")
-        .attr("fill", "gray")
-        .attr("d", path);
-});
+var path = d3.geoPath()
+    .projection(scale(0.4,width,height));
+var parseDate = d3.timeParse("%Y-%m-%d");
+console.log(parseDate("1950-02-01"));
+queue()
+    .defer(d3.json, "https://unpkg.com/us-atlas@1/us/10m.json")
+    .defer(d3.csv, "data/stateClimate.csv")
+    .await(function(error, us, climate){
+        america = topojson.feature(us, us.objects.states).features;
+        climateData = climate;
+        climateData = climateData.filter(function(d){
+            return d.date === "1950-02-01"
+        })
+        climateData.forEach(function(d){
+            var parseDate = d3.timeParse("%Y-%m-%d");
+            d.date = parseDate(String(d.date));
+            d.avgTemp = +d.avgTemp*(9.0/5.0)+32.0
+        });
+        console.log(climateData)
+        updateVis();
+    });
 
 function scale (scaleFactor,width,height) {
     return d3.geoTransform({
@@ -66,33 +48,38 @@ function scale (scaleFactor,width,height) {
         }
     });
 }
-// };
-
-
-
-/*
- * Data wrangling
- */
-
-// ChoroplethMap.prototype.wrangleData = function(){
-//     var vis = this;
-//
-//     // In the first step no data wrangling/filtering needed
-//     vis.displayData = vis.stackedData;
-//
-//     // Update the visualization
-//     vis.updateVis();
-// }
-//
-
-
-/*
- * The drawing function - should use the D3 update sequence (enter, update, exit)
- * Function parameters only needed if different kinds of updates are needed
- */
 
 function updateVis(){
-    var map = svg.append("g").selectAll("path")
+    // var date = parseDate("1950-02-01");
+    // var climateVis = climateData.filter(function(d){
+    //     return d.date === date;
+    // });
+    console.log(climateData)
+
+    var max_avg = d3.max(climateData, function(d){ return d.avgTemp});
+    var min_avg = d3.min(climateData, function(d){ return d.avgTemp});
+    var color = d3.scaleOrdinal()
+        .domain([min_avg, max_avg])
+        .range(["#0571b0", "#92c5de","#f7f7f7","#f4a582","#ca0020"]);
+    var map = svg.append("g")
+        .attr("class", "states")
+        .selectAll("path")
         .data(america);
+    console.log(america);
+    map.enter().append("path")
+        .attr("d", path)
+        .attr("fill", function(d){
+            d.id = +d.id;
+            var name = states_alpha[d.id];
+            var climateVis = climateData.filter(function(d){
+                return d.state === name;
+            });
+            if (typeof climateVis[0] != 'undefined'){
+                return color(climateVis[0].avgTemp)}
+            else{
+                return "gray"
+            }
+        });
+
 
 }
