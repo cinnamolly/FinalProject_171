@@ -25,15 +25,12 @@ var parseDate = d3.timeParse("%Y-%m-%d");
 console.log(parseDate("1950-02-01"));
 queue()
     .defer(d3.json, "https://unpkg.com/us-atlas@1/us/10m.json")
-    .defer(d3.csv, "data/stateClimate.csv")
+    .defer(d3.csv, "data/stateClimateYear.csv")
     .await(function(error, us, climate){
         america = topojson.feature(us, us.objects.states).features;
         climateData = climate;
-        climateData = climateData.filter(function(d){
-            return d.date === "1950-02-01"
-        })
         climateData.forEach(function(d){
-            var parseDate = d3.timeParse("%Y-%m-%d");
+            var parseDate = d3.timeParse("%Y");
             d.date = parseDate(String(d.date));
             d.avgTemp = +d.avgTemp*(9.0/5.0)+32.0
         });
@@ -50,36 +47,48 @@ function scale (scaleFactor,width,height) {
 }
 
 function updateVis(){
+    var timeScale = d3.scaleLinear()
+        .domain([0,63])
+        .range([1950, 2013]);
+    var selection = +d3.select("#dateRange")._groups[0][0].value
+    d3.select("#dateRange-value").text(timeScale(selection));
     // var date = parseDate("1950-02-01");
     // var climateVis = climateData.filter(function(d){
     //     return d.date === date;
     // });
     console.log(climateData)
+    var formatDate = d3.timeFormat("%Y")
+    var climateVis = climateData.filter(function(d){
+        var dt = +formatDate(d.date);
+        return dt === timeScale(selection);
+    });
+    console.log(climateVis[0])
 
     var max_avg = d3.max(climateData, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateData, function(d){ return d.avgTemp});
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
-        .range(["#0571b0", "#92c5de","#f7f7f7","#f4a582","#ca0020"]);
+        .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
     var map = svg.append("g")
         .attr("class", "states")
         .selectAll("path")
         .data(america);
     console.log(america);
     map.enter().append("path")
+        .merge(map)
+        .transition()
+        .duration(1000)
         .attr("d", path)
         .attr("fill", function(d){
             d.id = +d.id;
-            var name = states_alpha[d.id];
-            var climateVis = climateData.filter(function(d){
-                return d.state === name;
-            });
-            if (typeof climateVis[0] != 'undefined'){
-                return color(climateVis[0].avgTemp)}
+            var info =climateVis[d.id]
+            if (typeof info != 'undefined'){
+                return color(info.avgTemp)}
             else{
                 return "gray"
             }
         });
 
+    map.exit().remove();
 
 }

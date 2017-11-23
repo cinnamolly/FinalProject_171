@@ -29,11 +29,11 @@
 	<div class = "row-fluid">
 		<div class= "col-md-6">
 			<h4>Visual: Choropleth</h4>
-			<label for="nRadius"
+			<label for="dateRange"
 				   style="display: inline-block; width: 240px; text-align: right">
-				Date = <span id="nRadius-value"></span>
+				Year: <span id="dateRange-value"></span>
 			</label>
-			<input type="range" min="1950-01-01" max="2013-01-01" id="nRadius">
+			<input type="range" min="0" max="63" id="dateRange" onchange=updateVis()>
 			<div class = "choropleth">
 				<div id="choro"></div>
 			</div>
