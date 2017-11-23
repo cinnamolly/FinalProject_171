@@ -3,6 +3,8 @@ var america, climateData;
 var width = 800 - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
 
+var climateVis;
+
 // SVG drawing area
 
 var states_alpha = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida",
@@ -34,7 +36,9 @@ queue()
             d.date = parseDate(String(d.date));
             d.avgTemp = +d.avgTemp*(9.0/5.0)+32.0
         });
-        console.log(climateData)
+        console.log(climateData);
+        console.log("bet");
+        console.log(america);
         updateVis();
     });
 
@@ -47,6 +51,10 @@ function scale (scaleFactor,width,height) {
 }
 
 function updateVis(){
+    america = america.sort(function(a,b){
+        return b.id - a.id;
+    });
+
     var timeScale = d3.scaleLinear()
         .domain([0,63])
         .range([1950, 2013]);
@@ -58,11 +66,12 @@ function updateVis(){
     // });
     console.log(climateData)
     var formatDate = d3.timeFormat("%Y")
-    var climateVis = climateData.filter(function(d){
+    climateVis = climateData.filter(function(d){
         var dt = +formatDate(d.date);
         return dt === timeScale(selection);
     });
-    console.log(climateVis[0])
+    console.log("climate")
+    console.log(climateVis)
 
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
@@ -75,6 +84,12 @@ function updateVis(){
         .data(america);
     console.log(america);
     map.enter().append("path")
+        .attr("class", function(d){
+            return "state-" + d.id.toString();
+        })
+        .on("mouseover", function(d){
+            console.log(d3.select(this).attr("class"));
+        })
         .merge(map)
         .transition()
         .duration(1000)
@@ -90,5 +105,104 @@ function updateVis(){
         });
 
     map.exit().remove();
+
+}
+
+function changeVis(){
+    america = america.sort(function(a,b){
+        return b.id - a.id;
+    });
+    
+
+    svg.select("path.state-05").attr("fill", "none");
+
+    var map = svg
+        .selectAll("path")
+        .data(america);
+
+    map.enter().append("path")
+        .attr("class", function(d){
+            return "state-" + d.id.toString();
+        })
+        .merge(map)
+        .transition()
+        .duration(3000)
+        .attrTween("d", function(d, i){
+            console.log(d);
+            var dimensions,
+                path_string;
+            // specify the dimensions
+            dimensions = {
+                x: 10*i,
+                y: 20,
+                height: 3*i,
+                width: 5
+            };
+            // calculate the path string from the dimensions
+            path_string = d3.rect(dimensions);
+
+
+            var interpolator = flubber.interpolate(path(d), path_string);
+
+            return interpolator;})
+        .attr("fill", function(d){
+            d.id = +d.id;
+            var info =climateVis[d.id];
+            if (typeof info != 'undefined'){
+                return color(info.avgTemp)}
+            else{
+                return "gray"
+            }
+        });
+
+    map.exit().remove();
+
+}
+
+function changeVis1(){
+    america = america.sort(function(a,b){
+        return b.id - a.id;
+    });
+    var map = svg
+        .selectAll("path")
+        .data(america, function(d){
+        return d.id;
+    });
+    console.log(america);
+    map.enter().append("path")
+        .merge(map)
+        .transition()
+        .duration(3000)
+        .attrTween("d", function(d, i){
+            var dimensions,
+                path_string;
+            // specify the dimensions
+            dimensions = {
+                x: 10*i,
+                y: 20,
+                height: 3*i,
+                width: 5
+            };
+            // calculate the path string from the dimensions
+            path_string = d3.rect(dimensions);
+
+
+            var interpolator = flubber.interpolate(path_string, path(d));
+
+            return interpolator;})
+        //.attr("d", path)
+        .attr("fill", function(d){
+            d.id = +d.id;
+            var info =climateVis[d.id];
+            if (typeof info != 'undefined'){
+                return color(info.avgTemp)}
+            else{
+                return "gray"
+            }
+        });
+
+    map.exit().remove();
+
+
 
 }
