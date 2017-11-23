@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b86f7920-549a-4144-b493-c5b5dff992df" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/americaClimate.js" afterPath="$PROJECT_DIR$/js/americaClimate.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -52,8 +51,8 @@
       <file leaf-file-name="americaClimate.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/americaClimate.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="114" column="4" lean-forward="false" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="4" />
+            <state relative-caret-position="437">
+              <caret line="63" column="74" lean-forward="false" selection-start-line="63" selection-start-column="74" selection-end-line="63" selection-end-column="74" />
               <folding />
             </state>
           </provider>
@@ -111,8 +110,8 @@
       <file leaf-file-name="USA.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/USA.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-85573">
-              <caret line="0" column="4210" lean-forward="false" selection-start-line="0" selection-start-column="4210" selection-end-line="0" selection-end-column="4210" />
+            <state relative-caret-position="495">
+              <caret line="0" column="3897" lean-forward="false" selection-start-line="0" selection-start-column="3894" selection-end-line="0" selection-end-column="3897" />
               <folding />
             </state>
           </provider>
@@ -246,12 +245,12 @@
       <option name="presentableId" value="Default" />
       <updated>1511300206588</updated>
       <workItem from="1511300208011" duration="13193000" />
-      <workItem from="1511423713677" duration="5599000" />
+      <workItem from="1511423713677" duration="7138000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18792000" />
+    <option name="totallyTimeSpent" value="20331000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="35" y="22" width="1245" height="778" extended-state="6" />
@@ -431,10 +430,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/d3-rect.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/data/USA.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-85573">
-          <caret line="0" column="4210" lean-forward="false" selection-start-line="0" selection-start-column="4210" selection-end-line="0" selection-end-column="4210" />
+        <state relative-caret-position="495">
+          <caret line="0" column="3897" lean-forward="false" selection-start-line="0" selection-start-column="3894" selection-end-line="0" selection-end-column="3897" />
           <folding />
         </state>
       </provider>
@@ -447,18 +454,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/d3-rect.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/americaClimate.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="114" column="4" lean-forward="false" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="4" />
+        <state relative-caret-position="437">
+          <caret line="63" column="74" lean-forward="false" selection-start-line="63" selection-start-column="74" selection-end-line="63" selection-end-column="74" />
           <folding />
         </state>
       </provider>

@@ -52,8 +52,18 @@ function scale (scaleFactor,width,height) {
 
 function updateVis(){
     america = america.sort(function(a,b){
-        return b.id - a.id;
+        return a.id - b.id;
     });
+
+    america[8].id = 0;
+
+    america = america.sort(function(a,b){
+        return a.id - b.id;
+    });
+
+    america[19].geometry.coordinates = [america[19].geometry.coordinates[4]];
+
+    america[21].geometry.coordinates = [america[21].geometry.coordinates[1]];
 
     var timeScale = d3.scaleLinear()
         .domain([0,63])
@@ -81,7 +91,9 @@ function updateVis(){
     var map = svg.append("g")
         .attr("class", "states")
         .selectAll("path")
-        .data(america);
+        .data(america, function(d){
+            return d.id;
+        });
     console.log(america);
     map.enter().append("path")
         .attr("class", function(d){
@@ -110,15 +122,17 @@ function updateVis(){
 
 function changeVis(){
     america = america.sort(function(a,b){
-        return b.id - a.id;
+        return a.id - b.id;
     });
-    
 
-    svg.select("path.state-05").attr("fill", "none");
+
+    //svg.select("path.state-05").attr("fill", "none");
 
     var map = svg
         .selectAll("path")
-        .data(america);
+        .data(america, function(d){
+            return d.id;
+        });
 
     map.enter().append("path")
         .attr("class", function(d){
@@ -161,8 +175,9 @@ function changeVis(){
 
 function changeVis1(){
     america = america.sort(function(a,b){
-        return b.id - a.id;
+        return a.id - b.id;
     });
+
     var map = svg
         .selectAll("path")
         .data(america, function(d){
