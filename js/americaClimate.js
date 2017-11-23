@@ -64,8 +64,8 @@ function updateVis(){
     });
     console.log(climateVis[0])
 
-    var max_avg = d3.max(climateData, function(d){ return d.avgTemp});
-    var min_avg = d3.min(climateData, function(d){ return d.avgTemp});
+    var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
+    var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
         .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
