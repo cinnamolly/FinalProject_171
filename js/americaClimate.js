@@ -18,6 +18,9 @@ var svg = d3.select("#choro").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var bet = svg.append("g")
+    .attr("class", "states");
+
 var projection = d3.geoMercator()
     .translate([width / 2, height / 2]);
 
@@ -25,6 +28,11 @@ var path = d3.geoPath()
     .projection(scale(0.4,width,height));
 var parseDate = d3.timeParse("%Y-%m-%d");
 console.log(parseDate("1950-02-01"));
+
+
+
+
+
 queue()
     .defer(d3.json, "https://unpkg.com/us-atlas@1/us/10m.json")
     .defer(d3.csv, "data/stateClimateYear.csv")
@@ -36,9 +44,22 @@ queue()
             d.date = parseDate(String(d.date));
             d.avgTemp = +d.avgTemp*(9.0/5.0)+32.0
         });
-        console.log(climateData);
-        console.log("bet");
-        console.log(america);
+
+        america = america.sort(function(a,b){
+            return a.id - b.id;
+        });
+
+        america[8].id = 0;
+
+        america = america.sort(function(a,b){
+            return a.id - b.id;
+        });
+
+        america[19].geometry.coordinates = [america[19].geometry.coordinates[4]];
+
+        america[21].geometry.coordinates = [america[21].geometry.coordinates[1]];
+
+
         updateVis();
     });
 
@@ -51,24 +72,11 @@ function scale (scaleFactor,width,height) {
 }
 
 function updateVis(){
-    america = america.sort(function(a,b){
-        return a.id - b.id;
-    });
-
-    america[8].id = 0;
-
-    america = america.sort(function(a,b){
-        return a.id - b.id;
-    });
-
-    america[19].geometry.coordinates = [america[19].geometry.coordinates[4]];
-
-    america[21].geometry.coordinates = [america[21].geometry.coordinates[1]];
 
     var timeScale = d3.scaleLinear()
         .domain([0,63])
         .range([1950, 2013]);
-    var selection = +d3.select("#dateRange")._groups[0][0].value
+    var selection = +d3.select("#dateRange")._groups[0][0].value;
     d3.select("#dateRange-value").text(timeScale(selection));
     // var date = parseDate("1950-02-01");
     // var climateVis = climateData.filter(function(d){
@@ -88,8 +96,7 @@ function updateVis(){
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
         .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
-    var map = svg.append("g")
-        .attr("class", "states")
+    var map = bet
         .selectAll("path")
         .data(america, function(d){
             return d.id;
@@ -121,9 +128,6 @@ function updateVis(){
 }
 
 function changeVis(){
-    america = america.sort(function(a,b){
-        return a.id - b.id;
-    });
 
 
     //svg.select("path.state-05").attr("fill", "none");
