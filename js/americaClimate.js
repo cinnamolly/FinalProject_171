@@ -21,23 +21,25 @@ var svg = d3.select("#choro").append("svg")
 var bet = svg.append("g")
     .attr("class", "states");
 var nodes=[];
+var nodes_wind = [];
+var nodes_torn = [];
+var nodeFilter;
 var projection = d3.geoAlbersUsa()
     .translate([(width/4)*.01+330, (height/4)*.01+150]);
-
 var path = d3.geoPath()
     .projection(scale(0.6,width,height));
 var parseDate = d3.timeParse("%Y-%m-%d");
 console.log(parseDate("1950-02-01"));
-var node;
-
 
 
 
 queue()
     .defer(d3.json, "https://unpkg.com/us-atlas@1/us/10m.json")
     .defer(d3.csv, "data/stateClimateYear.csv")
-    .defer(d3.csv, "data/thw_data.csv")
-    .await(function(error, us, climate, incidents){
+    .defer(d3.csv, "data/1955-2016_hail.csv")
+    .defer(d3.csv, "data/1950-2016_torn.csv")
+    .defer(d3.csv, "data/1955-2016_wind.csv")
+    .await(function(error, us, climate, incidents, torn, wind){
         america = topojson.feature(us, us.objects.states).features;
         climateData = climate;
         climateData.forEach(function(d){
@@ -61,15 +63,34 @@ queue()
         america[21].geometry.coordinates = [america[21].geometry.coordinates[1]];
         incidents.forEach(function(d){
             var interior_data = {};
-            interior_data['latitude'] = d.lat;
-            interior_data['longitude'] = d.lon;
-            interior_data['event'] = d.type;
-            interior_data['state'] = d.state;
+            interior_data['latitude'] = d.slat;
+            interior_data['longitude'] = d.slon;
+            interior_data['state'] = d.st;
             interior_data['date'] = d.date;
-            interior_data['year'] = d.year;
+            interior_data['year'] = d.yr;
+            interior_data['mag'] = d.mag;
             nodes.push(interior_data)
         });
-        console.log(nodes);
+        torn.forEach(function(d){
+            var interior_data = {};
+            interior_data['latitude'] = d.slat;
+            interior_data['longitude'] = d.slon;
+            interior_data['state'] = d.st;
+            interior_data['date'] = d.date;
+            interior_data['year'] = d.yr;
+            interior_data['mag'] = d.mag;
+            nodes_torn.push(interior_data)
+        });
+        wind.forEach(function(d){
+            var interior_data = {};
+            interior_data['latitude'] = d.slat;
+            interior_data['longitude'] = d.slon;
+            interior_data['state'] = d.st;
+            interior_data['date'] = d.date;
+            interior_data['year'] = d.yr;
+            interior_data['mag'] = d.mag;
+            nodes_wind.push(interior_data)
+        });
 
         updateVis();
     });
@@ -83,6 +104,7 @@ function scale (scaleFactor,width,height) {
 }
 
 function updateVis(){
+    console.log("UPDATE VIS")
 
     var timeScale = d3.scaleLinear()
         .domain([0,63])
@@ -102,7 +124,13 @@ function updateVis(){
     console.log("climate")
     console.log(nodes)
     var nodeFilter = nodes.filter(function(d){
-        return +d.year === timeScale(selection);
+        return (+d.year === timeScale(selection)) && (+d.mag>=2.0);
+    })
+    var nodeFilter_t = nodes_torn.filter(function(d){
+        return (+d.year === timeScale(selection)) && (+d.mag>=2.0);
+    })
+    var nodeFilter_w = nodes_wind.filter(function(d){
+        return (+d.year === timeScale(selection)) && (+d.mag>=15.0);
     })
     console.log(nodeFilter)
 
@@ -137,38 +165,86 @@ function updateVis(){
                 return "gray"
             }
         });
-    node = svg.selectAll(".node")
-        .data(nodeFilter)
-    node.enter()
-        .append("circle")
-        .attr("r", 5)
+    var node = svg.selectAll(".node1")
+        .data(nodeFilter);
+    node.enter().append("circle")
+        .attr("class", "node1")
         .merge(node)
         .transition()
         .duration(1000)
+        .attr("r", 5)
         .attr("transform", function(d) {
             var p = projection([d.longitude, d.latitude])
             if (p != null)
-            {var x = p[0]*.7+215
-            var y = p[1]*.7+155
-            return "translate(" +x+","+y+")";}
+            {
+                var x = p[0]*.7+215
+                var y = p[1]*.7+155
+                return "translate(" +x+","+y+")";
+            }
             return;
         })
-        // .attr("fill", function(d){
-        //     var t = d.event;
-        //     if (t === "Tornado"){
-        //
-        //     }
-        //     else if (t === "")
-        // });
+        .attr("fill", "darkgray");
 
+    var node_t = svg.selectAll(".node2")
+        .data(nodeFilter_t);
+    node_t.enter().append("circle")
+        .attr("class", "node2")
+        .merge(node_t)
+        .transition()
+        .duration(1000)
+        .attr("r", 5)
+        .attr("transform", function(d) {
+            var p = projection([d.longitude, d.latitude])
+            if (p != null)
+            {
+                var x = p[0]*.7+215
+                var y = p[1]*.7+155
+                return "translate(" +x+","+y+")";
+            }
+            return;
+        })
+        .attr("fill", "darkgreen");
+
+    var node_w = svg.selectAll(".node3")
+        .data(nodeFilter_w);
+    node_w.enter().append("circle")
+        .attr("class", "node3")
+        .merge(node_w)
+        .transition()
+        .duration(1000)
+        .attr("r", 5)
+        .attr("transform", function(d) {
+            var p = projection([d.longitude, d.latitude])
+            if (p != null)
+            {
+                var x = p[0]*.7+215
+                var y = p[1]*.7+155
+                return "translate(" +x+","+y+")";
+            }
+            return;
+        })
+        .attr("fill", "#cf640c");
     node.exit().remove();
+    node_t.exit().remove();
+    node_w.exit().remove();
 
     map.exit().remove();
 
 }
 
 function changeVis(){
-
+    var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
+    var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
+    var color = d3.scaleOrdinal()
+        .domain([min_avg, max_avg])
+        .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
+    console.log("CHANGE VIS")
+    svg.selectAll(".node1").attr("fill", "none")
+    svg.selectAll(".node2").attr("fill", "none")
+    svg.selectAll(".node3").attr("fill", "none")
+    // node.exit().remove();
+    // node_t.exit().remove();
+    // node_w.exit().remove();
 
     //svg.select("path.state-05").attr("fill", "none");
 
@@ -191,8 +267,8 @@ function changeVis(){
                 path_string;
             // specify the dimensions
             dimensions = {
-                x: 10*i,
-                y: 20,
+                x: 10*i+150,
+                y: 70,
                 height: 3*i,
                 width: 5
             };
@@ -212,12 +288,23 @@ function changeVis(){
                 return "gray"
             }
         });
-    node.exit().remove();
     map.exit().remove();
 
 }
 
 function changeVis1(){
+    var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
+    var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
+    var color = d3.scaleOrdinal()
+        .domain([min_avg, max_avg])
+        .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
+    console.log("CHANGE VIS 1")
+    svg.selectAll(".node1").attr("fill", "darkgrey")
+    svg.selectAll(".node2").attr("fill", "darkgreen")
+    svg.selectAll(".node3").attr("fill", "#cf640c")
+    // node.exit().remove();
+    // node_t.exit().remove();
+    // node_w.exit().remove();
     america = america.sort(function(a,b){
         return a.id - b.id;
     });
@@ -237,8 +324,8 @@ function changeVis1(){
                 path_string;
             // specify the dimensions
             dimensions = {
-                x: 10*i,
-                y: 20,
+                x: 10*i+150,
+                y: 70,
                 height: 3*i,
                 width: 5
             };
@@ -259,7 +346,6 @@ function changeVis1(){
                 return "gray"
             }
         });
-    node.exit().remove();
     map.exit().remove();
 
 
