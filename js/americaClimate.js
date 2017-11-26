@@ -1,4 +1,4 @@
-var margin = { top: 0, right: 0, bottom: 0, left: 60 };
+var margin = { top: 0, right: 0, bottom: 0, left: 0 };
 var america, climateData;
 var width = 800 - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
@@ -16,19 +16,19 @@ var svg = d3.select("#choro").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(-150,-60)");
 
 var bet = svg.append("g")
     .attr("class", "states");
-
-var projection = d3.geoMercator()
-    .translate([width / 2, height / 2]);
+var nodes=[];
+var projection = d3.geoAlbersUsa()
+    .translate([(width/4)*.01+330, (height/4)*.01+150]);
 
 var path = d3.geoPath()
-    .projection(scale(0.4,width,height));
+    .projection(scale(0.6,width,height));
 var parseDate = d3.timeParse("%Y-%m-%d");
 console.log(parseDate("1950-02-01"));
-
+var node;
 
 
 
@@ -36,7 +36,8 @@ console.log(parseDate("1950-02-01"));
 queue()
     .defer(d3.json, "https://unpkg.com/us-atlas@1/us/10m.json")
     .defer(d3.csv, "data/stateClimateYear.csv")
-    .await(function(error, us, climate){
+    .defer(d3.csv, "data/thw_data.csv")
+    .await(function(error, us, climate, incidents){
         america = topojson.feature(us, us.objects.states).features;
         climateData = climate;
         climateData.forEach(function(d){
@@ -58,7 +59,17 @@ queue()
         america[19].geometry.coordinates = [america[19].geometry.coordinates[4]];
 
         america[21].geometry.coordinates = [america[21].geometry.coordinates[1]];
-
+        incidents.forEach(function(d){
+            var interior_data = {};
+            interior_data['latitude'] = d.lat;
+            interior_data['longitude'] = d.lon;
+            interior_data['event'] = d.type;
+            interior_data['state'] = d.state;
+            interior_data['date'] = d.date;
+            interior_data['year'] = d.year;
+            nodes.push(interior_data)
+        });
+        console.log(nodes);
 
         updateVis();
     });
@@ -89,7 +100,11 @@ function updateVis(){
         return dt === timeScale(selection);
     });
     console.log("climate")
-    console.log(climateVis)
+    console.log(nodes)
+    var nodeFilter = nodes.filter(function(d){
+        return +d.year === timeScale(selection);
+    })
+    console.log(nodeFilter)
 
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
@@ -122,6 +137,31 @@ function updateVis(){
                 return "gray"
             }
         });
+    node = svg.selectAll(".node")
+        .data(nodeFilter)
+    node.enter()
+        .append("circle")
+        .attr("r", 5)
+        .merge(node)
+        .transition()
+        .duration(1000)
+        .attr("transform", function(d) {
+            var p = projection([d.longitude, d.latitude])
+            if (p != null)
+            {var x = p[0]*.7+215
+            var y = p[1]*.7+155
+            return "translate(" +x+","+y+")";}
+            return;
+        })
+        // .attr("fill", function(d){
+        //     var t = d.event;
+        //     if (t === "Tornado"){
+        //
+        //     }
+        //     else if (t === "")
+        // });
+
+    node.exit().remove();
 
     map.exit().remove();
 
@@ -172,7 +212,7 @@ function changeVis(){
                 return "gray"
             }
         });
-
+    node.exit().remove();
     map.exit().remove();
 
 }
@@ -219,7 +259,7 @@ function changeVis1(){
                 return "gray"
             }
         });
-
+    node.exit().remove();
     map.exit().remove();
 
 
