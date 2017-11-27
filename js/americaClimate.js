@@ -135,7 +135,8 @@ function updateVis(){
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
-        .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
+       // .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"])
+    .range(['#c51b7d','#de77ae','#f1b6da','#fde0ef','#c7eae5','#80cdc1','#35978f','#01665e']);
 
     var map = bet
         .selectAll("path")
@@ -181,10 +182,10 @@ function updateVis(){
             }
             return;
         })
-        .attr("fill", "#06a7a4")
+        .attr("fill", "#152394")
         .attr("stroke", "black")
-        .attr("fill-opacity", 0.7)
-        .attr("stroke-opacity", 0.7);
+        .attr("fill-opacity", 0.5)
+        .attr("stroke-opacity", 0.5);
 
     var node_t = svg.selectAll(".node2")
         .data(nodeFilter_t);
@@ -206,8 +207,8 @@ function updateVis(){
         })
         .attr("fill", "#152394")
         .attr("stroke", "black")
-        .attr("fill-opacity", 0.7)
-        .attr("stroke-opacity", 0.7);
+        .attr("fill-opacity", 0.5)
+        .attr("stroke-opacity", 0.5);
 
     var node_w = svg.selectAll(".node3")
         .data(nodeFilter_w);
@@ -227,10 +228,10 @@ function updateVis(){
             }
             return;
         })
-        .attr("fill", "#d82492")
+        .attr("fill", "#152394")
         .attr("stroke", "black")
-        .attr("fill-opacity", 0.7)
-        .attr("stroke-opacity", 0.7);
+        .attr("fill-opacity", 0.5)
+        .attr("stroke-opacity", 0.5);
 
     node.exit().transition().attr("r", 0).remove();
     node_t.exit().transition().attr("r", 0).remove();
@@ -256,7 +257,7 @@ function changeVis(){
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
-        .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
+        .range(['#c51b7d','#de77ae','#f1b6da','#fde0ef','#c7eae5','#80cdc1','#35978f','#01665e']);
     console.log("CHANGE VIS");
     svg.selectAll(".node1").attr("fill", "none").attr("stroke", "none");
     svg.selectAll(".node2").attr("fill", "none").attr("stroke", "none");
@@ -317,7 +318,7 @@ function changeVis1(){
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
-        .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
+        .range(['#c51b7d','#de77ae','#f1b6da','#fde0ef','#c7eae5','#80cdc1','#35978f','#01665e']);
     console.log("CHANGE VIS 1")
     //svg.selectAll(".node1").attr("fill-opacity", 0).attr("stroke-opacity", 0).transition().delay(3000).attr("fill-opacity", 0.7).attr("stroke-opacity", 0.7).attr("fill", "#06a7a4").attr("stroke", "black");
     //svg.selectAll(".node2").attr("fill-opacity", 0).attr("stroke-opacity", 0).transition().delay(3000).attr("fill-opacity", 0.7).attr("stroke-opacity", 0.7).attr("fill", "#152394").attr("stroke", "black");
@@ -327,9 +328,9 @@ function changeVis1(){
     // node_w.exit().remove();
 
 
-    svg.selectAll(".node1").attr("fill-opacity", .7).attr("stroke-opacity", 0.7).attr("fill", "#06a7a4").attr("stroke", "black").attr("r", 0).transition().delay(3000).attr("r",5);
-    svg.selectAll(".node2").attr("fill-opacity", .7).attr("stroke-opacity", 0.7).attr("r", 0).attr("fill", "#152394").attr("stroke", "black").transition().delay(3000).attr("r",5);
-    svg.selectAll(".node3").attr("fill-opacity", .7).attr("stroke-opacity", 0.7).attr("r", 0).attr("fill", "#d82492").attr("stroke", "black").transition().delay(3000).attr("r",5);
+    svg.selectAll(".node1").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("fill", "#152394").attr("stroke", "black").attr("r", 0).transition().delay(3000).attr("r",5);
+    svg.selectAll(".node2").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("r", 0).attr("fill", "#152394").attr("stroke", "black").transition().delay(3000).attr("r",5);
+    svg.selectAll(".node3").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("r", 0).attr("fill", "#152394").attr("stroke", "black").transition().delay(3000).attr("r",5);
     america = america.sort(function(a,b){
         return a.id - b.id;
     });

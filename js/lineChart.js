@@ -143,7 +143,7 @@ LineChart.prototype.initVis = function() {
         .attr("class", "y-axis axis");
 
     vis.svg.append("g")
-        .attr("transform", "translate(" + (800 - vis.margin.left-  2) + ",0)")
+        .attr("transform", "translate(" + (800 - vis.margin.left - 35) + ",0)")
         .attr("class", "y-axis2 axis");
 
     vis.temp = insertRelevantData(vis.temp, vis.tornData,["fat", "loss"]);
@@ -185,7 +185,7 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
     vis.yAxis = d3.axisLeft()
         .scale(vis.y);
 
-    vis.yAxis2 = d3.axisLeft()
+    vis.yAxis2 = d3.axisRight()
         .scale(vis.y2);
 
     vis.valueline = d3.line()
@@ -204,7 +204,8 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
 
     line1.enter().append("path")
         .attr("id", "line")
-        .attr("stroke", "blue")
+        .attr("stroke", "#152394")
+        .attr("stroke-width", 3)
         .merge(line1).transition().duration(1000)
         .attr("d", vis.valueline);
 
@@ -214,7 +215,8 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
 
     line2.enter().append("path")
         .attr("id", "line2")
-        .attr("stroke", "green")
+        .attr("stroke", "#06a7a4")
+        .attr("stroke-width", 3)
         .merge(line2).transition().duration(1000)
         .attr("d", vis.valueline2);
 
