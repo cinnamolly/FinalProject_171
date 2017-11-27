@@ -232,13 +232,24 @@ function updateVis(){
 
 }
 
+function visTrans(){
+    if ($('#button').text() === "Bar Chart"){
+        changeVis();
+    }else{
+        changeVis1();
+    }
+
+}
+
 function changeVis(){
+
+    $("#button").text("Choropleth");
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
         .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
-    console.log("CHANGE VIS")
+    console.log("CHANGE VIS");
     svg.selectAll(".node1").attr("fill", "none")
     svg.selectAll(".node2").attr("fill", "none")
     svg.selectAll(".node3").attr("fill", "none")
@@ -268,7 +279,7 @@ function changeVis(){
             // specify the dimensions
             dimensions = {
                 x: 10*i+150,
-                y: 70,
+                y: height - 3*i,
                 height: 3*i,
                 width: 5
             };
@@ -293,15 +304,16 @@ function changeVis(){
 }
 
 function changeVis1(){
+    $("#button").text("Bar Chart");
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
         .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
     console.log("CHANGE VIS 1")
-    svg.selectAll(".node1").attr("fill", "darkgrey")
-    svg.selectAll(".node2").attr("fill", "darkgreen")
-    svg.selectAll(".node3").attr("fill", "#cf640c")
+    svg.selectAll(".node1").attr("fill-opacity", 0).transition().delay(3000).attr("fill-opacity", 1).attr("fill", "darkgrey")
+    svg.selectAll(".node2").attr("fill-opacity", 0).transition().delay(3000).attr("fill-opacity", 1).attr("fill", "darkgreen")
+    svg.selectAll(".node3").attr("fill-opacity", 0).transition().delay(3000).attr("fill-opacity", 1).attr("fill", "#cf640c")
     // node.exit().remove();
     // node_t.exit().remove();
     // node_w.exit().remove();
@@ -325,7 +337,7 @@ function changeVis1(){
             // specify the dimensions
             dimensions = {
                 x: 10*i+150,
-                y: 70,
+                y: height - 3*i,
                 height: 3*i,
                 width: 5
             };
