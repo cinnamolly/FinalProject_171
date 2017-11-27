@@ -9,10 +9,11 @@
 StackedAreaChart = function(_parentElement, _data){
 	this.parentElement = _parentElement;
     this.data = _data;
+    this.altered_data = _data;
     this.displayData = []; // see data wrangling
 
     // DEBUG RAW DATA
-    console.log(this.data);
+    console.log("Loaded");
 
     this.initVis();
 }
@@ -28,15 +29,15 @@ StackedAreaChart.prototype.initVis = function(){
 
 	vis.margin = { top: 40, right: 0, bottom: 60, left: 60 };
 
-	vis.width = 800 - vis.margin.left - vis.margin.right,
-    vis.height = 400 - vis.margin.top - vis.margin.bottom;
+	vis.width = 550 - vis.margin.left - vis.margin.right,
+    vis.height = 350 - vis.margin.top - vis.margin.bottom;
 
-    vis.altered_data = [];
-    var arr = [];
+    //vis.altered_data = [];
+    //var arr = [];
 
     vis.keys = ["tornadoes", "hail", "wind"];
 
-
+/**
     for (var i = 0; i <= 61; i++){
         arr.push((i + 1955));
         var filtered_data_torn = vis.data.filter(function(d){
@@ -55,6 +56,10 @@ StackedAreaChart.prototype.initVis = function(){
 
         vis.altered_data.push(obj);
     }
+ */
+
+    var jsonObject = JSON.stringify(vis.altered_data);
+    console.log(jsonObject);
 
   // SVG drawing area
 	vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -101,8 +106,6 @@ StackedAreaChart.prototype.initVis = function(){
         .keys(vis.keys);
 
     vis.stackedData = vis.stack(vis.altered_data);
-
-    console.log(dateParser("1985-01-01"));
 	
     // TO-DO: Rearrange data
 
@@ -123,12 +126,11 @@ StackedAreaChart.prototype.initVis = function(){
             return i*30 + 83;
         })
         .attr("height", 25)
-        .attr("width", 100)
+        .attr("width", 80)
         .attr("fill", function(d) {
             return colorScale(d.toLowerCase());
         })
         .on("click", function(d, i){
-            console.log(d3.select(this).attr("fill"));
             //vis.keys = ["tornadoes", "hail", "wind"];
 
             if ($.inArray(d.toLowerCase(), vis.keys) < 0) {
@@ -144,7 +146,6 @@ StackedAreaChart.prototype.initVis = function(){
             vis.stack.keys(vis.keys);
             vis.stackedData = vis.stack(vis.altered_data);
 
-            console.log(vis.keys);
 
             vis.wrangleData();
 
@@ -156,7 +157,7 @@ StackedAreaChart.prototype.initVis = function(){
         .data(["Wind", "Hail", "Tornadoes"])
         .enter()
         .append("text")
-        .attr("x", 20)
+        .attr("x", 10)
         .attr("y", function(d, i){
             return i*30 + 100;
         })
@@ -165,7 +166,6 @@ StackedAreaChart.prototype.initVis = function(){
         .text(function(d, i){
             return d;
         });
-    console.log(vis.stackedData);
 
     vis.rec = vis.svg.append("svg")
         .attr("class", "rec")
@@ -211,8 +211,6 @@ StackedAreaChart.prototype.updateVis = function(){
 		})
 	]);
     var dataCategories = vis.keys;
-
-    console.log(dataCategories);
 
 // Draw the layers
     var categories = vis.svg.selectAll(".area")

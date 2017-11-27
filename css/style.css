@@ -1,5 +1,48 @@
 #line, #line2 {fill: none}
 
+#shiva {
+  font-size: 75px;
+  padding-bottom: 0;
+}
+
+#opening{
+  font-size: 50px;
+}
+
+.hero-image {
+  /* The image used */
+  /* background-image: url("/img/hurricane-irma-st-martin.jpg");*/
+
+  /* Set a specific height */
+  height: 240px;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+#headline{
+  font-size: 60px;
+}
+
+h4{
+  font-weight: normal;
+}
+img{
+  height: 260px;
+  width: 100%
+}
+/* Place text in the middle of the image */
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #f7f7f7;

@@ -23,23 +23,31 @@ Timeline = function(_parentElement, _data){
 Timeline.prototype.initVis = function(){
     var vis = this;
 
+    vis.keys = ["tornadoes", "hail", "wind"];
+
+
     vis.altered_data = [];
-    arr = [];
 
     for (var i = 0; i <= 61; i++){
-        var filtered_data = vis.data.filter(function(d){
-            return +d.year === i + 1955;
-        });
+        var events = +vis.data[i].tornadoes + +vis.data[i].hail + +vis.data[i].wind;
 
-            vis.altered_data.push(filtered_data.length);
-        }
+            vis.altered_data.push(events);
+    }
+
+    vis.stack = d3.stack()
+        .keys(vis.keys);
+
+    vis.stackedData = vis.stack(vis.data);
+
     // read about the this
 
-    vis.displayData = vis.altered_data;
+    vis.displayData = vis.stackedData;
+
+    console.log(vis.stackedData);
 
 	vis.margin = {top: 0, right: 0, bottom: 30, left: 60};
 
-	vis.width = 800 - vis.margin.left - vis.margin.right,
+	vis.width = 550 - vis.margin.left - vis.margin.right,
     vis.height = 100 - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
@@ -56,24 +64,35 @@ Timeline.prototype.initVis = function(){
 
     vis.y = d3.scaleLinear()
         .range([vis.height, 0])
-        .domain([0, d3.max(vis.displayData, function(d) { return d; })]);
+        .domain([0, d3.max(vis.data, function(d) { return +d.tornadoes + +d.hail + +d.wind; })]);
 
     vis.xAxis = d3.axisBottom()
         .scale(vis.x);
 
-    console.log(vis.x.domain());
     // SVG area path generator
     vis.area = d3.area()
         .x(function(d, i) {return vis.x(dateParser((i + 1955).toString() + "-01-01")); })
-        .y0(vis.height)
-        .y1(function(d) { console.log(vis.y(d)); return vis.y(d); });
+        .y0(function(d) {return vis.y(d[0]); })
+        .y1(function(d) { return vis.y(d[1]); });
 
-    console.log(vis.displayData);
     // Draw area by using the path generator
-    vis.svg.append("path")
-        .datum(vis.displayData)
-        .attr("fill", "#ccc")
-        .attr("d", vis.area);
+    //vis.svg.append("path")
+    //    .datum(vis.displayData)
+     //   .attr("fill", "#ccc")
+     //   .attr("d", vis.area);
+
+    var categories = vis.svg.selectAll(".area")
+        .data(vis.stackedData);
+
+    categories.enter().append("path")
+        .attr("class", "area")
+        .merge(categories)
+        .style("fill", function(d,i) {
+            return "#ccc";
+        })
+        .attr("d", function(d) {
+            return vis.area(d);
+        });
 
 
   // TO-DO: Initialize brush component
@@ -96,4 +115,31 @@ Timeline.prototype.initVis = function(){
       .call(vis.xAxis);
 
 }
+/**
+Timeline.prototype.updateVis = function(_range){
+    var vis = this;
+
+    console.log(_range);
+
+
+    var categories = vis.svg.selectAll(".area")
+        .data(vis.stackedData);
+
+    categories.enter().append("path")
+        .attr("class", "area")
+        .merge(categories)
+        .style("fill", function(d,i) {
+            console.log(d);
+            console.log(dateParser((i + 1955).toString() + "-01-01"));
+            if (dateParser((i + 1955).toString() + "-01-01") <= _range[1] && (dateParser((i + 1955).toString() + "-01-01") >= _range[0]))
+                return colorScale(vis.keys[i]);
+            else
+                return "#ccc";
+        })
+        .attr("d", function(d) {
+            return vis.area(d);
+        });
+
+}
+ */
 

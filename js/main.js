@@ -30,18 +30,20 @@ loadCsvData();
 
 function loadCsvData(){
     d3.queue()
-        .defer(d3.csv, "data/thw_data.csv")
+        .defer(d3.json, "data/thw_data.json")
         .defer(d3.csv, "data/stateClimate.csv")
         .defer(d3.csv, "data/1950-2016_torn.csv")
         .defer(d3.csv, "data/1955-2016_hail.csv")
         .defer(d3.csv, "data/1955-2016_wind.csv")
         .await(function(error, file1, file2, file3, file4, file5) {
             if (!error){
-                allData = file1;
+                allData = file1.data;
                 climateData = file2;
                 tornData = file3;
                 hailData = file4;
                 windData = file5;
+
+                console.log(file1.data);
             }
 
             createVis();

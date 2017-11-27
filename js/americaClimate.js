@@ -29,7 +29,6 @@ var projection = d3.geoAlbersUsa()
 var path = d3.geoPath()
     .projection(scale(0.6,width,height));
 var parseDate = d3.timeParse("%Y-%m-%d");
-console.log(parseDate("1950-02-01"));
 
 
 
@@ -115,14 +114,12 @@ function updateVis(){
     // var climateVis = climateData.filter(function(d){
     //     return d.date === date;
     // });
-    console.log(climateData)
     var formatDate = d3.timeFormat("%Y")
     climateVis = climateData.filter(function(d){
         var dt = +formatDate(d.date);
         return dt === timeScale(selection);
     });
-    console.log("climate")
-    console.log(nodes)
+
     var nodeFilter = nodes.filter(function(d){
         return (+d.year === timeScale(selection)) && (+d.mag>=2.0);
     })
@@ -139,12 +136,13 @@ function updateVis(){
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
         .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
+
     var map = bet
         .selectAll("path")
         .data(america, function(d){
             return d.id;
         });
-    console.log(america);
+
     map.enter().append("path")
         .attr("class", function(d){
             return "state-" + d.id.toString();
@@ -183,7 +181,10 @@ function updateVis(){
             }
             return;
         })
-        .attr("fill", "darkgray");
+        .attr("fill", "#06a7a4")
+        .attr("stroke", "black")
+        .attr("fill-opacity", 0.7)
+        .attr("stroke-opacity", 0.7);
 
     var node_t = svg.selectAll(".node2")
         .data(nodeFilter_t);
@@ -203,7 +204,10 @@ function updateVis(){
             }
             return;
         })
-        .attr("fill", "darkgreen");
+        .attr("fill", "#152394")
+        .attr("stroke", "black")
+        .attr("fill-opacity", 0.7)
+        .attr("stroke-opacity", 0.7);
 
     var node_w = svg.selectAll(".node3")
         .data(nodeFilter_w);
@@ -223,10 +227,14 @@ function updateVis(){
             }
             return;
         })
-        .attr("fill", "#cf640c");
-    node.exit().remove();
-    node_t.exit().remove();
-    node_w.exit().remove();
+        .attr("fill", "#d82492")
+        .attr("stroke", "black")
+        .attr("fill-opacity", 0.7)
+        .attr("stroke-opacity", 0.7);
+
+    node.exit().transition().attr("r", 0).remove();
+    node_t.exit().transition().attr("r", 0).remove();
+    node_w.exit().transition().attr("r", 0).remove();
 
     map.exit().remove();
 
@@ -250,9 +258,9 @@ function changeVis(){
         .domain([min_avg, max_avg])
         .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
     console.log("CHANGE VIS");
-    svg.selectAll(".node1").attr("fill", "none")
-    svg.selectAll(".node2").attr("fill", "none")
-    svg.selectAll(".node3").attr("fill", "none")
+    svg.selectAll(".node1").attr("fill", "none").attr("stroke", "none");
+    svg.selectAll(".node2").attr("fill", "none").attr("stroke", "none");
+    svg.selectAll(".node3").attr("fill", "none").attr("stroke", "none");
     // node.exit().remove();
     // node_t.exit().remove();
     // node_w.exit().remove();
@@ -273,7 +281,7 @@ function changeVis(){
         .transition()
         .duration(3000)
         .attrTween("d", function(d, i){
-            console.log(d);
+
             var dimensions,
                 path_string;
             // specify the dimensions
@@ -311,12 +319,17 @@ function changeVis1(){
         .domain([min_avg, max_avg])
         .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"]);
     console.log("CHANGE VIS 1")
-    svg.selectAll(".node1").attr("fill-opacity", 0).transition().delay(3000).attr("fill-opacity", 1).attr("fill", "darkgrey")
-    svg.selectAll(".node2").attr("fill-opacity", 0).transition().delay(3000).attr("fill-opacity", 1).attr("fill", "darkgreen")
-    svg.selectAll(".node3").attr("fill-opacity", 0).transition().delay(3000).attr("fill-opacity", 1).attr("fill", "#cf640c")
+    //svg.selectAll(".node1").attr("fill-opacity", 0).attr("stroke-opacity", 0).transition().delay(3000).attr("fill-opacity", 0.7).attr("stroke-opacity", 0.7).attr("fill", "#06a7a4").attr("stroke", "black");
+    //svg.selectAll(".node2").attr("fill-opacity", 0).attr("stroke-opacity", 0).transition().delay(3000).attr("fill-opacity", 0.7).attr("stroke-opacity", 0.7).attr("fill", "#152394").attr("stroke", "black");
+    //svg.selectAll(".node3").attr("fill-opacity", 0).attr("stroke-opacity", 0).transition().delay(3000).attr("fill-opacity", 0.7).attr("stroke-opacity", 0.7).attr("fill", "#d82492").attr("stroke", "black");
     // node.exit().remove();
     // node_t.exit().remove();
     // node_w.exit().remove();
+
+
+    svg.selectAll(".node1").attr("fill-opacity", .7).attr("stroke-opacity", 0.7).attr("fill", "#06a7a4").attr("stroke", "black").attr("r", 0).transition().delay(3000).attr("r",5);
+    svg.selectAll(".node2").attr("fill-opacity", .7).attr("stroke-opacity", 0.7).attr("r", 0).attr("fill", "#152394").attr("stroke", "black").transition().delay(3000).attr("r",5);
+    svg.selectAll(".node3").attr("fill-opacity", .7).attr("stroke-opacity", 0.7).attr("r", 0).attr("fill", "#d82492").attr("stroke", "black").transition().delay(3000).attr("r",5);
     america = america.sort(function(a,b){
         return a.id - b.id;
     });
@@ -326,7 +339,7 @@ function changeVis1(){
         .data(america, function(d){
         return d.id;
     });
-    console.log(america);
+
     map.enter().append("path")
         .merge(map)
         .transition()

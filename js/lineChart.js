@@ -77,8 +77,8 @@ LineChart = function(_parentElement, file1, file2, file3, file4, file5){
     this.displayData = []; // see data wrangling
 
     // DEBUG RAW DATA
-    console.log(this.climateData);
-    console.log(this.tornData);
+    //console.log(this.climateData);
+    //console.log(this.tornData);
 
     this.initVis();
 }
