@@ -35,9 +35,9 @@ var parseDate = d3.timeParse("%Y-%m-%d");
 queue()
     .defer(d3.json, "https://unpkg.com/us-atlas@1/us/10m.json")
     .defer(d3.csv, "data/stateClimateYear.csv")
-    .defer(d3.csv, "data/1955-2016_hail.csv")
-    .defer(d3.csv, "data/1950-2016_torn.csv")
-    .defer(d3.csv, "data/1955-2016_wind.csv")
+    .defer(d3.csv, "data/hail_data.csv")
+    .defer(d3.csv, "data/torn_data.csv")
+    .defer(d3.csv, "data/wind_data.csv")
     .await(function(error, us, climate, incidents, torn, wind){
         america = topojson.feature(us, us.objects.states).features;
         climateData = climate;
@@ -238,6 +238,33 @@ function updateVis(){
     node_w.exit().transition().attr("r", 0).remove();
 
     map.exit().remove();
+
+    console.log(color.range());
+
+    d3.select("svg").selectAll("rect")
+        .data(color.range())
+        .enter()
+        .append("rect")
+        .attr("x", 625)
+        .attr("y", function(d, i){
+            return i *30 + 80;
+        })
+        .attr("fill", function(d){
+            return d;
+        })
+        .attr("height", 30)
+        .attr("width", 30);
+
+    d3.select("svg")
+        .append("circle")
+        .attr("cx", 640)
+        .attr("cy", 50)
+        .attr("r", 5)
+        .attr("fill","#152394")
+        .attr("stroke", "black")
+        .attr("fill-opacity", 0.5)
+        .attr("stroke-opacity", 0.5);
+
 
 }
 

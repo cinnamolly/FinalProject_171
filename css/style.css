@@ -1,11 +1,14 @@
 #line, #line2 {fill: none}
 
 #shiva {
+  font-family: 'Roboto', sans-serif;
   font-size: 75px;
   padding-bottom: 0;
 }
 
+
 #opening{
+  font-family: 'Roboto', sans-serif;
   font-size: 50px;
 }
 
@@ -19,8 +22,10 @@
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: auto;
   position: relative;
+  box-shadow: 11px 11px 11px 11px black;
+
 }
 
 #headline{
@@ -45,8 +50,9 @@ img{
 }
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #f7f7f7;
+  background-color: #252c34;
   text-align: center;
+  color: white;
 }
 
 h1 {
@@ -60,9 +66,49 @@ h2 {
   margin-bottom: 40px;
 }
 
+#button{
+  width: 100px;
+  border-radius: 5px 5px 5px 5px;
+  color: #06A7A4;
+  border-color: #06A7A4;
+  background-color: transparent;
+
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms linear;
+
+  -webkit-transition: color 2000ms linear;
+  -ms-transition: color 200ms linear;
+  transition: color 200ms linear;
+}
+
+
+#button:hover{
+  background-color: #06A7A4;
+  color: white;
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms linear;
+
+  -webkit-transition: color 2000ms linear;
+  -ms-transition: color 200ms linear;
+  transition: color 200ms linear;
+}
+
+.axis line{
+  stroke: white;
+}
+
+.axis path{
+  stroke: white;
+}
+
+.axis text{
+  fill: white;
+}
+
 .container-fluid {
-	padding-right: 30px;
-	padding-left: 30px;
+  padding: 0;
 }
 
 .axis path,
@@ -74,6 +120,85 @@ h2 {
 
 .browser text {
   text-anchor: end;
+}
+
+.visual1{
+  background-color: #2d3641;
+  height: 500px;
+  overflow: hidden;
+  box-shadow:
+          0px 0px 9px 1px #0F1216,
+          0px 0px 9px 1px#0F1216;
+}
+
+.text{
+  height:500px;
+  overflow: hidden;
+  background-color: #1c2229;
+  box-shadow:
+          0px 0px 9px 1px#0F1216,
+          0px 0px 9px 1px#0F1216;
+
+}
+
+.section h2{
+  font-size: 40px;
+}
+
+#break{
+  height: 100px
+}
+
+.choro-visual{
+  border-right: solid;
+  border-right-color: #06A7A4;
+}
+
+.choro-text{
+  border-left: solid;
+  border-left-color: #06A7A4;
+}
+
+.choro-text h3{
+  text-align: left;
+  padding-left: 0.5cm;
+}
+
+.area-visual{
+  border-left: solid;
+  border-left-color: #D82492;
+}
+
+.area-text{
+  border-right: solid;
+  border-right-color: #D82492;
+}
+
+.area-text h3{
+  text-align: right;
+  padding-right: 0.5cm;
+}
+
+.line-visual{
+  border-left: solid;
+  border-left-color: #152394;
+  border-right: solid;
+  border-right-color: #152394;
+}
+
+.line-text1{
+  border-right: solid;
+  border-right-color: #152394;
+  z-index: 1000;
+}
+.line-text2{
+  border-left: solid;
+  border-left-color: #152394;
+  z-index: 1000;
+}
+
+.bet{
+ padding: 0;
 }
 
 .area {
