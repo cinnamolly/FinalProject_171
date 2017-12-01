@@ -15,7 +15,7 @@ var dateParser = d3.timeParse("%Y-%m-%d");
 var parseDate = d3.timeParse("%Y");
 
 // Set ordinal color scale
-var colorScale = d3.scaleOrdinal(["#152394","#06a7a4", "#d82492"]).domain(["tornado", "hail", "wind"]);
+var colorScale = d3.scaleOrdinal(['#a6cee3','#152394','#06A7A4','#b2df8a','#D82492','#e31a1c','#fdbf6f','#ff7f00','#cab2d6']).domain(["Blizzard", "Flood", "Hail", "Hurricane", "Thunderstorm", "Tornado", "Tropical Storm", "Tsunami", "Wildfire"]);
 
 // Variables for the visualization instances
 var areachart, timeline, climate, line;
@@ -43,7 +43,7 @@ function loadCsvData(){
                 hailData = file4;
                 windData = file5;
 
-                console.log(file1.data);
+                console.log(file1);
             }
 
             createVis();

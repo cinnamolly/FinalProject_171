@@ -23,27 +23,33 @@ Timeline = function(_parentElement, _data){
 Timeline.prototype.initVis = function(){
     var vis = this;
 
-    vis.keys = ["tornadoes", "hail", "wind"];
+    vis.keys = ["Blizzard", "Flood", "Hail", "Hurricane", "Thunderstorm", "Tornado", "Tropical Storm", "Tsunami", "Wildfire"];
 
 
     vis.altered_data = [];
 
-    for (var i = 0; i <= 61; i++){
-        var events = +vis.data[i].tornadoes + +vis.data[i].hail + +vis.data[i].wind;
 
-            vis.altered_data.push(events);
-    }
 
-    vis.stack = d3.stack()
-        .keys(vis.keys);
+    vis.data.forEach(function(d){
+        var sum = 0;
+        for (var e in d){
+            sum += d[e];
+        }
 
-    vis.stackedData = vis.stack(vis.data);
+        vis.altered_data.push(sum);
+
+    });
+
+    //vis.stack = d3.stack()
+     //   .keys(vis.keys);
+
+    vis.stackedData = vis.altered_data;
 
     // read about the this
 
     vis.displayData = vis.stackedData;
 
-    console.log(vis.stackedData);
+    //console.log(vis.stackedData);
 
 	vis.margin = {top: 0, right: 0, bottom: 30, left: 60};
 
@@ -52,7 +58,7 @@ Timeline.prototype.initVis = function(){
 
     // SVG drawing area
 	vis.svg = d3.select("#" + vis.parentElement).append("svg")
-	    .attr("width", vis.width + vis.margin.left + vis.margin.right)
+	    .attr("width", vis.width + vis.margin.left + vis.margin.right + 150)
 	    .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
 	  .append("g")
 	    .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
@@ -60,27 +66,29 @@ Timeline.prototype.initVis = function(){
 // Scales and axes
     vis.x = d3.scaleTime()
         .range([0, vis.width])
-        .domain([dateParser("1955-01-01"), dateParser("2016-01-01")]);
+        .domain([dateParser("1980-01-01"), dateParser("2017-01-01")]);
 
     vis.y = d3.scaleLinear()
         .range([vis.height, 0])
-        .domain([0, d3.max(vis.data, function(d) { return +d.tornadoes + +d.hail + +d.wind; })]);
+        .domain([0, d3.max(vis.altered_data, function(d) { return d; })]);
 
     vis.xAxis = d3.axisBottom()
         .scale(vis.x);
 
     // SVG area path generator
     vis.area = d3.area()
-        .x(function(d, i) {return vis.x(dateParser((i + 1955).toString() + "-01-01")); })
-        .y0(function(d) {return vis.y(d[0]); })
-        .y1(function(d) { return vis.y(d[1]); });
+        .x(function(d, i) {return vis.x(dateParser((i + 1980).toString() + "-01-01")); })
+        .y0(function(d) {return vis.y(0); })
+        .y1(function(d) { return vis.y(d); })
+        .curve(d3.curveCardinal);
 
     // Draw area by using the path generator
-    //vis.svg.append("path")
-    //    .datum(vis.displayData)
-     //   .attr("fill", "#ccc")
-     //   .attr("d", vis.area);
+    vis.svg.append("path")
+        .datum(vis.displayData)
+        .attr("fill", "#ccc")
+        .attr("d", vis.area);
 
+    /**
     var categories = vis.svg.selectAll(".area")
         .data(vis.stackedData);
 
@@ -93,6 +101,7 @@ Timeline.prototype.initVis = function(){
         .attr("d", function(d) {
             return vis.area(d);
         });
+     **/
 
 
   // TO-DO: Initialize brush component

@@ -32,38 +32,35 @@ StackedAreaChart.prototype.initVis = function(){
 	vis.width = 550 - vis.margin.left - vis.margin.right,
     vis.height = 350 - vis.margin.top - vis.margin.bottom;
 
-    //vis.altered_data = [];
+   // vis.altered_data = [];
     //var arr = [];
 
-    vis.keys = ["tornadoes", "hail", "wind"];
+    vis.keys = ["Blizzard", "Flood", "Hail", "Hurricane", "Thunderstorm", "Tornado", "Tropical Storm", "Tsunami", "Wildfire"];
 
 /**
-    for (var i = 0; i <= 61; i++){
-        arr.push((i + 1955));
-        var filtered_data_torn = vis.data.filter(function(d){
-            return +d.year === i + 1955 && d.type === "Tornado";
-        });
+    for (var i = 0; i <= 37; i++){
+        arr.push((i + 1980));
 
-        var filtered_data_hail = vis.data.filter(function(d){
-            return +d.year === i + 1955 && d.type === "Hail";
-        });
+        var obj = {};
 
-        var filtered_data_wind = vis.data.filter(function(d){
-            return +d.year === i + 1955 && d.type === "Wind";
-        });
+        vis.keys.forEach(function(t){
+            var filtered_data = vis.data.filter(function(d){
+                return +d.YEAR === i + 1980 && d.EVENT_TYPE === t;
+            });
 
-        var obj = {tornadoes: filtered_data_torn.length, hail: filtered_data_hail.length, wind: filtered_data_wind.length};
+            obj[t] = filtered_data.length;
+
+        });
 
         vis.altered_data.push(obj);
     }
- */
+    **/
 
-    var jsonObject = JSON.stringify(vis.altered_data);
-    console.log(jsonObject);
+    console.log(JSON.stringify(vis.altered_data));
 
   // SVG drawing area
 	vis.svg = d3.select("#" + vis.parentElement).append("svg")
-	    .attr("width", vis.width + vis.margin.left + vis.margin.right)
+	    .attr("width", vis.width + vis.margin.left + vis.margin.right+ 150)
 	    .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
        .append("g")
 	    .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
@@ -80,7 +77,7 @@ StackedAreaChart.prototype.initVis = function(){
     // Scales and axes
     vis.x = d3.scaleTime()
         .range([0, vis.width])
-        .domain([dateParser("1955-01-01"), dateParser("2016-01-01")]);
+        .domain([dateParser("1980-01-01"), dateParser("2017-01-01")]);
 
     vis.y = d3.scaleLinear()
         .range([vis.height, 0]);
@@ -112,33 +109,37 @@ StackedAreaChart.prototype.initVis = function(){
     // TO-DO: Stacked area layout
 	vis.area = d3.area()
         //.curve(d3.curveCardinal)
-        .x(function(d, i) {return vis.x(dateParser((i + 1955).toString() + "-01-01")); })
+        .x(function(d, i) {return vis.x(dateParser((i + 1980).toString() + "-01-01")); })
         .y0(function(d) {return vis.y(d[0]); })
-        .y1(function(d) { return vis.y(d[1]); });
+        .y1(function(d) { return vis.y(d[1]); })
+        .curve(d3.curveCardinal);
 
-    vis.svg2.selectAll("rect.bet")
-        .data(["Wind", "hail", "Tornadoes"])
+    vis.svg.selectAll("rect.bet")
+        .data(vis.keys)
         .enter()
         .append("rect")
         .attr("class", "bet")
-        .attr("x", 0)
+        .attr("x", 520)
         .attr("y", function(d, i){
-            return i*30 + 83;
+            return i*30 + 10;
         })
         .attr("height", 25)
-        .attr("width", 80)
+        .attr("width", 100)
+        .attr("rx", 6)
+        .attr("ry", 6)
         .attr("fill", function(d) {
-            return colorScale(d.toLowerCase());
+            return colorScale(d);
         })
         .on("click", function(d, i){
             //vis.keys = ["tornadoes", "hail", "wind"];
 
-            if ($.inArray(d.toLowerCase(), vis.keys) < 0) {
-                vis.keys.splice(vis.keys.length, 0, d.toLowerCase());
-                d3.select(this).transition().attr("fill", colorScale(d.toLowerCase()));
+            if ($.inArray(d, vis.keys) < 0) {
+                vis.keys.splice(vis.keys.length, 0, d);
+                d3.select(this).transition().attr("fill", colorScale(d))
+                vis.keys.sort();
             }
             else {
-                vis.keys.splice($.inArray(d.toLowerCase(), vis.keys), 1);
+                vis.keys.splice($.inArray(d, vis.keys), 1);
                 d3.select(this).transition().attr("fill", "gray");
             }
 
@@ -153,13 +154,13 @@ StackedAreaChart.prototype.initVis = function(){
         });
 
 	// TO-DO: Tooltip placeholder
-    vis.svg2.selectAll("text")
-        .data(["Wind", "Hail", "Tornadoes"])
+    vis.svg.selectAll("text")
+        .data(vis.keys)
         .enter()
         .append("text")
-        .attr("x", 10)
+        .attr("x", 530)
         .attr("y", function(d, i){
-            return i*30 + 100;
+            return i*30 + 25;
         })
         .attr("font-size", "12px")
         .attr("stroke", "white")

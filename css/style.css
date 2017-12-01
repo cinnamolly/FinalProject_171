@@ -14,17 +14,36 @@
 
 .hero-image {
   /* The image used */
-  /* background-image: url("/img/hurricane-irma-st-martin.jpg");*/
+  background-image: url("../img/banner.jpg");
 
   /* Set a specific height */
-  height: 240px;
+  height: 300px;
 
   /* Position and center the image to scale nicely on all screens */
-  background-position: center;
+  background-attachment: fixed;
+  background-position: bottom;
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: cover;
   position: relative;
-  box-shadow: 11px 11px 11px 11px black;
+  box-shadow: 3px 3px 3px 3px black;
+
+}
+
+.hero-image-2{
+  /* The image used */
+  background-image: url("../img/banner-2.jpg");
+
+  /* Set a specific height */
+  height: 200px;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-attachment: fixed;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  box-shadow: 5px 5px 5px 5px black;
+  padding: 0;
 
 }
 
@@ -48,6 +67,16 @@ img{
   transform: translate(-50%, -50%);
   color: white;
 }
+
+.hero-text-2 {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #252c34;
@@ -111,6 +140,10 @@ h2 {
   padding: 0;
 }
 
+.section{
+  padding: 0;
+}
+
 .axis path,
 .axis line {
   fill: none;
@@ -140,7 +173,6 @@ h2 {
           0px 0px 9px 1px#0F1216;
 
 }
-
 .section h2{
   font-size: 40px;
 }
