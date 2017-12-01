@@ -95,7 +95,6 @@ function updateVis(){
     var formatDate = d3.timeFormat("%Y")
     console.log(climateData)
     climateVis = climateData.filter(function(d){
-        console.log(d.date)
         return d.date === timeScale(selection);
     });
     console.log(climateVis)
