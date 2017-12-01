@@ -31,7 +31,7 @@ loadCsvData();
 function loadCsvData(){
     d3.queue()
         .defer(d3.json, "data/thw_data.json")
-        .defer(d3.csv, "data/stateClimate.csv")
+        .defer(d3.csv, "data/variance.csv")
         .defer(d3.csv, "data/1950-2016_torn.csv")
         .defer(d3.csv, "data/1955-2016_hail.csv")
         .defer(d3.csv, "data/1955-2016_wind.csv")
