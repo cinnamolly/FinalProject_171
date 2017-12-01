@@ -4,80 +4,17 @@
  * @param _data						-- the
  */
 
-var states_hash =
-    {
-        'Alabama': 'AL',
-        'Alaska': 'AK',
-        'American Samoa': 'AS',
-        'Arizona': 'AZ',
-        'Arkansas': 'AR',
-        'California': 'CA',
-        'Colorado': 'CO',
-        'Connecticut': 'CT',
-        'Delaware': 'DE',
-        'District Of Columbia': 'DC',
-        'Federated States Of Micronesia': 'FM',
-        'Florida': 'FL',
-        'Georgia': 'GA',
-        'Guam': 'GU',
-        'Hawaii': 'HI',
-        'Idaho': 'ID',
-        'Illinois': 'IL',
-        'Indiana': 'IN',
-        'Iowa': 'IA',
-        'Kansas': 'KS',
-        'Kentucky': 'KY',
-        'Louisiana': 'LA',
-        'Maine': 'ME',
-        'Marshall Islands': 'MH',
-        'Maryland': 'MD',
-        'Massachusetts': 'MA',
-        'Michigan': 'MI',
-        'Minnesota': 'MN',
-        'Mississippi': 'MS',
-        'Missouri': 'MO',
-        'Montana': 'MT',
-        'Nebraska': 'NE',
-        'Nevada': 'NV',
-        'New Hampshire': 'NH',
-        'New Jersey': 'NJ',
-        'New Mexico': 'NM',
-        'New York': 'NY',
-        'North Carolina': 'NC',
-        'North Dakota': 'ND',
-        'Northern Mariana Islands': 'MP',
-        'Ohio': 'OH',
-        'Oklahoma': 'OK',
-        'Oregon': 'OR',
-        'Palau': 'PW',
-        'Pennsylvania': 'PA',
-        'Puerto Rico': 'PR',
-        'Rhode Island': 'RI',
-        'South Carolina': 'SC',
-        'South Dakota': 'SD',
-        'Tennessee': 'TN',
-        'Texas': 'TX',
-        'Utah': 'UT',
-        'Vermont': 'VT',
-        'Virgin Islands': 'VI',
-        'Virginia': 'VA',
-        'Washington': 'WA',
-        'West Virginia': 'WV',
-        'Wisconsin': 'WI',
-        'Wyoming': 'WY'
-    };
+var states = {"AL":"ALABAMA","AK":"ALASKA","AS":"AMERICAN SAMOA","AZ":"ARIZONA","AR":"ARKANSAS","CA":"CALIFORNIA","CO":"COLORADO","CT":"CONNECTICUT","DE":"DELAWARE","DC":"DISTRICT OF COLUMBIA","FM":"FEDERATED STATES OF MICRONESIA","FL":"FLORIDA","GA":"GEORGIA","GU":"GUAM","HI":"HAWAII","ID":"IDAHO","IL":"ILLINOIS","IN":"INDIANA","IA":"IOWA","KS":"KANSAS","KY":"KENTUCKY","LA":"LOUISIANA","ME":"MAINE","MH":"MARSHALL ISLANDS","MD":"MARYLAND","MA":"MASSACHUSETTS","MI":"MICHIGAN","MN":"MINNESOTA","MS":"MISSISSIPPI","MO":"MISSOURI","MT":"MONTANA","NE":"NEBRASKA","NV":"NEVADA","NH":"NEW HAMPSHIRE","NJ":"NEW JERSEY","NM":"NEW MEXICO","NY":"NEW YORK","NC":"NORTH CAROLINA","ND":"NORTH DAKOTA","MP":"NORTHERN MARIANA ISLANDS","OH":"OHIO","OK":"OKLAHOMA","OR":"OREGON","PW":"PALAU","PA":"PENNSYLVANIA","PR":"PUERTO RICO","RI":"RHODE ISLAND","SC":"SOUTH CAROLINA","SD":"SOUTH DAKOTA","TN":"TENNESSEE","TX":"TEXAS","UT":"UTAH","VT":"VERMONT","VI":"VIRGIN ISLANDS","VA":"VIRGINIA","WA":"WASHINGTON","WV":"WEST VIRGINIA","WI":"WISCONSIN","WY":"WYOMING"};
 
-LineChart = function(_parentElement, file1, file2, file3, file4, file5){
+
+LineChart = function(_parentElement, file1, file2){
     this.parentElement = _parentElement;
-    this.allData = file1;
-    this.climateData = file2;
-    this.tornData = file3;
-    this.hailData = file4;
-    this.windData = file5;
+    this.climateData = file1;
+    this.allData = file2;
     this.displayData = []; // see data wrangling
 
     // DEBUG RAW DATA
-    //console.log(this.climateData);
+    console.log(this.climateData);
     //console.log(this.tornData);
 
     this.initVis();
@@ -90,37 +27,41 @@ LineChart.prototype.initVis = function() {
     vis.parseDate = d3.timeParse("%Y");
     vis.dateParser = d3.timeParse("%Y-%m-%d");
 
-    vis.margin = { top: 40, right: 0, bottom: 60, left: 60 };
+    vis.margin = { top: 40, right: 30, bottom: 60, left: 60 };
 
     vis.width = 800 - vis.margin.left - vis.margin.right,
         vis.height = 400 - vis.margin.top - vis.margin.bottom;
 
     vis.selectedState = "AL";
-    vis.selected = "fat";
+    vis.selected = "DEATHS_DIRECT";
 
     vis.climateData.forEach(function (d) {
-        if (states_hash[d.state] in vis.temp) {
-            if (typeof vis.temp[states_hash[d.state]][(+(d.date.substring(0, 4)) - 1950)] !== 'undefined')
+        if (d.state.toUpperCase() in vis.temp) {
+            if (typeof vis.temp[d.state.toUpperCase()][(+(d.date.substring(0, 4)) - 1980)] !== 'undefined')
             {
-                vis.temp[states_hash[d.state]][(+(d.date.substring(0, 4)) - 1950)].avgTemp = +d.avgTemp * (9.0 / 5.0) + 32.0;
+                vis.temp[d.state.toUpperCase()][(+(d.date.substring(0, 4)) - 1980)].avgTemp = +d.avgTemp;
+                    // * (9.0 / 5.0) + 32.0;
             }
             else {
                 var innertemp = {};
                 innertemp.date = d.date.substring(0, 4);
-                innertemp.avgTemp = +d.avgTemp * (9.0 / 5.0) + 32.0;
-                vis.temp[states_hash[d.state]][(+(d.date.substring(0, 4)) - 1950)] = innertemp;
+                innertemp.avgTemp = +d.avgTemp;
+                    // * (9.0 / 5.0) + 32.0;
+                vis.temp[d.state.toUpperCase()][(+(d.date.substring(0, 4)) - 1980)] = innertemp;
             }
         }
         else {
-            vis.temp[states_hash[d.state]] = new Array(67);
+            vis.temp[d.state.toUpperCase()] = new Array(36);
             var innertemp = {};
             innertemp.date = d.date.substring(0, 4);
-            innertemp.avgTemp = +d.avgTemp * (9.0 / 5.0) + 32.0;
-            vis.temp[states_hash[d.state]][(+(d.date.substring(0, 4)) - 1950)] = innertemp;
+            innertemp.avgTemp = +d.avgTemp;
+                // * (9.0 / 5.0) + 32.0;
+            vis.temp[d.state.toUpperCase()][(+(d.date.substring(0, 4)) - 1980)] = innertemp;
         }
 
-        d.date = dateParser(String(d.date));
-        d.avgTemp = +d.avgTemp * (9.0 / 5.0) + 32.0
+        // d.date = dateParser(String(d.date));
+        // d.avgTemp = +d.avgTemp;
+        // * (9.0 / 5.0) + 32.0
     });
 
     // SVG drawing area
@@ -133,7 +74,7 @@ LineChart.prototype.initVis = function() {
     // Scales and axes
     vis.x = d3.scaleTime()
         .range([0, vis.width])
-        .domain([parseDate("1950"), parseDate("2016")]);
+        .domain([parseDate("1980"), parseDate("2016")]);
 
     vis.svg.append("g")
         .attr("transform", "translate(0," + vis.height + ")")
@@ -143,15 +84,14 @@ LineChart.prototype.initVis = function() {
         .attr("class", "y-axis axis");
 
     vis.svg.append("g")
-        .attr("transform", "translate(" + (800 - vis.margin.left - 35) + ",0)")
+        .attr("transform", "translate(" + (800 - vis.margin.left - 30) + ",0)")
         .attr("class", "y-axis2 axis");
 
-    vis.temp = insertRelevantData(vis.temp, vis.tornData,["fat", "loss"]);
-    vis.temp = insertRelevantData(vis.temp, vis.hailData,["fat", "loss"]);
-    vis.temp = insertRelevantData(vis.temp, vis.windData,["fat", "loss"]);
+    console.log(vis.temp);
 
+    vis.temp = insertRelevantData(vis.temp, vis.allData,["DEATHS_DIRECT"]);
 
-    this.updateVis("fat", "AL");
+    this.updateVis(vis.selected, vis.selectedState);
 }
 
 
@@ -160,7 +100,9 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
     vis.selected = selected;
     vis.selectedState = selectedState;
 
-    vis.displayData = vis.temp[vis.selectedState];
+    vis.displayData = vis.temp[states[vis.selectedState]];
+
+    console.log(vis.temp);
 
     vis.y = d3.scaleLinear()
         .range([vis.height, 0])
@@ -179,7 +121,7 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
         }));
 
     vis.xAxis = d3.axisBottom()
-        .ticks(5)
+        .ticks(12)
         .scale(vis.x);
 
     vis.yAxis = d3.axisLeft()
@@ -233,15 +175,15 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
 function insertRelevantData(temp, data, values) {
     values.forEach(function (t) {
         data.forEach(function (d) {
-            if (d.st !== "") {
-                if (d.st in temp) {
-                    if (typeof temp[d.st][(+d.yr - 1950)] !== 'undefined') {
-                        if (t in temp[d.st][(+d.yr - 1950)])
+            if (d["STATE"] !== "") {
+                if (d["STATE"] in temp) {
+                    if (typeof temp[d["STATE"]][(+d["YEAR"] - 1980)] !== 'undefined') {
+                        if (t in temp[d["STATE"]][(+d["YEAR"] - 1980)])
                         {
-                            temp[d.st][(+d.yr - 1950)][t] += +d[t];
+                            temp[d["STATE"]][(+d["YEAR"] - 1980)][t] += +d[t];
                         }
                         else {
-                            temp[d.st][(+d.yr - 1950)][t] = +d[t];
+                            temp[d["STATE"]][(+d["YEAR"] - 1980)][t] = +d[t];
                         }
                     }
                 }
