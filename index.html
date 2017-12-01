@@ -24,36 +24,24 @@
 		<h4>Exploring the Link between Temperature Change and Occurrence of Damaging Weather Events</h4>
 	</div>
 </div>
+
 <div>
-	<br>
-	<br>
-	<div id="shiva">
-		<span class="count">26023</span>
-		<p id="opening">severe weather events in the last year.</p>
-	</div>
+<video autoplay muted loop id="myVideo">
+	<source src="https://www.youtube.com/watch?v=q6yHoSvrTss" type="video/mp4">
+	Your browser does not support HTML5 video.
+</video>
+
+<div class="content">
+	<h1>Heading</h1>
+	<p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei. Id qui nemore latine molestiae, ad mutat oblique delicatissimi pro.</p>
+	<button id="myBtn" onclick="myFunction()">Pause</button>
 </div>
+</div>
+
 			<div class="hero-image-2">
 			<div class="section hero-text-2"><h2>Climate Change in the United States</h2><h5>Text: Overview of climate change</h5></div>
 			</div>
-			</div>
 		<div class="container-fluid data">
-	<div class = "row-fluid lit">
-		<div class= "col-sm-8 visual1 choro-visual">
-			<h4>State Temperature Change and Weather Events by Year</h4>
-			<button id= "button" onclick="visTrans()">Bar Chart</button>
-			<label for="dateRange"
-				   style="display: inline-block; width: 240px; text-align: right">
-				Year: <span id="dateRange-value"></span>
-			</label>
-			<input type="range" min="0" max="63" id="dateRange" onchange=updateVis()>
-			<div class = "choropleth">
-				<div id="choro"></div>
-			</div>
-		</div>
-		<div class= "col-sm-4 text choro-text bet">
-			<h3>This is something that we noticed about the location weather events and temperature change.</h3>
-		</div>
-	</div>
 	<div class = "row-fluid">
 		<div class = "col-md-12">
 			<div class="section"><h2>Severe Weather</h2><h5>Text: Overview of severe weather</h5></div>
@@ -153,6 +141,25 @@
 			<h5>Text: Damage ($)</h5>
 		</div>
 	</div>
+
+			<div class = "row-fluid lit">
+				<div class= "col-sm-8 visual1 choro-visual">
+					<h4>State Temperature Change and Weather Events by Year</h4>
+					<button id= "button" onclick="visTrans()">Bar Chart</button>
+					<label for="dateRange"
+						   style="display: inline-block; width: 240px; text-align: right">
+						Year: <span id="dateRange-value"></span>
+					</label>
+					<input type="range" min="0" max="63" id="dateRange" onchange=updateVis()>
+					<div class = "choropleth">
+						<div id="choro"></div>
+					</div>
+				</div>
+				<div class= "col-sm-4 text choro-text bet">
+					<h3>This is something that we noticed about the location weather events and temperature change.</h3>
+				</div>
+			</div>
+
 </div>
 
 	<!-- Load JS libraries -->
