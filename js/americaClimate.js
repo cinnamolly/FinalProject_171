@@ -40,7 +40,6 @@ queue()
         america = topojson.feature(us, us.objects.states).features;
         climateData = climate;
         climateData.forEach(function(d){
-            //var parseDate = d3.timeParse("%Y");
             d.date = +d.date;
             d.avgTemp = +d.avgTemp;
         });
@@ -88,20 +87,28 @@ function updateVis(){
         .range([1980, 2016]);
     var selection = +d3.select("#dateRange")._groups[0][0].value;
     d3.select("#dateRange-value").text(timeScale(selection));
-    // var date = parseDate("1950-02-01");
-    // var climateVis = climateData.filter(function(d){
-    //     return d.date === date;
-    // });
     var formatDate = d3.timeFormat("%Y")
+    climateData.forEach(function(d){
+        d.date = +d.date;
+        d.avgTemp = +d.avgTemp;
+    });
     console.log(climateData)
     climateVis = climateData.filter(function(d){
-        return d.date === timeScale(selection);
+        return +d.date === timeScale(selection);
     });
     console.log(climateVis)
 
+    var c = 0;
 
     var nodeFilter = nodes.filter(function(d){
         return (+d.year === timeScale(selection)) && ((d.damage !== "0") || (d.damage !== "0K"));
+    })
+    var nodeFilter = nodeFilter.filter(function(d){
+        c = c+1
+        if (c ===10){
+            c=0
+            return d;
+        }
     })
     console.log(nodeFilter)
 
@@ -117,7 +124,6 @@ function updateVis(){
         .data(america, function(d){
             return d.id;
         });
-
     map.enter().append("path")
         .attr("class", function(d){
             return "state-" + d.id.toString();
@@ -133,7 +139,7 @@ function updateVis(){
             d.id = +d.id;
             var info =climateVis[d.id]
             if (typeof info != 'undefined'){
-                return color(info.avgTemp)}
+                return color(+info.avgTemp)}
             else{
                 return "gray"
             }
