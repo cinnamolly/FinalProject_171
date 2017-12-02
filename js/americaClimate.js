@@ -6,12 +6,10 @@ var height = 400 - margin.top - margin.bottom;
 var climateVis;
 
 // SVG drawing area
+var incidentByState = {};
+var states_alpha = ["NULL","Alabama","Hawaii","NULL","Arizona","Arkansas","California","NULL","Colorado","Connecticut","Delaware","NULL","Florida","Georgia","NULL","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","NULL","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","NULL","Washington","West Virginia","Wisconsin","Wyoming"];
+var states_pure_alpha = ["Alabama","Hawaii","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii", "Hawaii", "Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
 
-var states_alpha = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida",
-    "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa", "Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts",
-    "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
-    "New York","North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
-    "South Dakota","Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"];
 var svg = d3.select("#choro").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -67,7 +65,21 @@ queue()
             interior_data['year'] = d.YEAR;
             interior_data['damage'] = d.DAMAGE_PROPERTY;
             nodes.push(interior_data)
+            var st = (d.STATE).toLowerCase()
+            st = st.charAt(0).toUpperCase() + st.slice(1)
+            var n = st.indexOf(" ");
+            if (n!== -1){
+                st = st.slice(0,n) + " " +st.charAt(n+1).toUpperCase() + st.slice(n+2)
+            }
+            if (incidentByState[st]){
+                incidentByState[st] += 1
+            }
+            else{
+                incidentByState[st] = 1
+            }
+
         });
+        console.log(incidentByState)
         updateVis();
     });
 
@@ -97,6 +109,15 @@ function updateVis(){
         return +d.date === timeScale(selection);
     });
     console.log(climateVis)
+
+    var climateByState = {};
+
+    climateVis.forEach(function(d){
+        var interior = {}
+        interior['date'] = d.date;
+        interior['avgTemp'] = d.avgTemp;
+        climateByState[d.state] = interior;
+    })
 
     var c = 0;
 
@@ -137,11 +158,14 @@ function updateVis(){
         .attr("d", path)
         .attr("fill", function(d){
             d.id = +d.id;
-            var info =climateVis[d.id]
-            if (typeof info != 'undefined'){
-                return color(+info.avgTemp)}
-            else{
-                return "gray"
+            var st = states_alpha[d.id]
+            if (st !== "NULL"){
+                var info = climateByState[st];
+                if (typeof info != 'undefined'){
+                    return color(+info.avgTemp)}
+                else{
+                    return "gray"
+                }
             }
         });
     var node = svg.selectAll(".node1")
@@ -210,6 +234,14 @@ function visTrans(){
 }
 
 function changeVis(){
+    var max_incidents = d3.max(d3.values(incidentByState));
+    var min_incidents = d3.min(d3.values(incidentByState));
+    console.log(min_incidents)
+    console.log(max_incidents)
+    var numIncidents = d3.scaleLinear()
+        .domain([min_incidents, max_incidents])
+        // .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"])
+        .range([0, 150]);
 
     $("#button").text("Choropleth");
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
@@ -226,7 +258,14 @@ function changeVis(){
     // node_w.exit().remove();
 
     //svg.select("path.state-05").attr("fill", "none");
+    var climateByState = {};
 
+    climateVis.forEach(function(d){
+        var interior = {}
+        interior['date'] = d.date;
+        interior['avgTemp'] = d.avgTemp;
+        climateByState[d.state] = interior;
+    })
     var map = svg
         .selectAll("path")
         .data(america, function(d){
@@ -240,31 +279,48 @@ function changeVis(){
         .merge(map)
         .transition()
         .duration(3000)
-        .attrTween("d", function(d, i){
+        .attrTween("d", function(d, i) {
+            console.log(d.id)
+            var s = states_alpha[d.id]
+            if (s !== "NULL") {
+                var c = incidentByState[s]
+                //console.log(s)
+                var h = numIncidents(c)
+                console.log(h)
+                var dimensions,
+                    path_string;
+                // specify the dimensions
+                if (h===0){
+                    h = 1;
+                }
+                dimensions = {
+                    x: 10 * i + 150,
+                    y: height - h,
+                    height: h,
+                    width: 5
+                };
 
-            var dimensions,
-                path_string;
-            // specify the dimensions
-            dimensions = {
-                x: 10*i+150,
-                y: height - 3*i,
-                height: 3*i,
-                width: 5
-            };
-            // calculate the path string from the dimensions
-            path_string = d3.rect(dimensions);
+                console.log(dimensions)
 
-
-            var interpolator = flubber.interpolate(path(d), path_string);
-
-            return interpolator;})
+                // calculate the path string from the dimensions
+                //if (typeof dimensions != 'undefined') {
+                console.log(s)
+                path_string = d3.rect(dimensions);
+                var interpolator = flubber.interpolate(path(d), path_string);
+                console.log(interpolator)
+                return interpolator;
+            }
+            })
         .attr("fill", function(d){
             d.id = +d.id;
-            var info =climateVis[d.id];
-            if (typeof info != 'undefined'){
-                return color(info.avgTemp)}
-            else{
-                return "gray"
+            var st = states_alpha[d.id]
+            if (st !== "NULL"){
+                var info = climateByState[st];
+                if (typeof info != 'undefined'){
+                    return color(+info.avgTemp)}
+                else{
+                    return "gray"
+                }
             }
         });
     map.exit().remove();
@@ -272,6 +328,14 @@ function changeVis(){
 }
 
 function changeVis1(){
+    var max_incidents = d3.max(d3.values(incidentByState));
+    var min_incidents = d3.min(d3.values(incidentByState));
+    console.log(min_incidents)
+    console.log(max_incidents)
+    var numIncidents = d3.scaleLinear()
+        .domain([min_incidents, max_incidents])
+        // .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"])
+        .range([0, 150]);
     $("#button").text("Bar Chart");
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
@@ -286,7 +350,14 @@ function changeVis1(){
     // node_t.exit().remove();
     // node_w.exit().remove();
 
+    var climateByState = {};
 
+    climateVis.forEach(function(d){
+        var interior = {}
+        interior['date'] = d.date;
+        interior['avgTemp'] = d.avgTemp;
+        climateByState[d.state] = interior;
+    })
     svg.selectAll(".node1").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("fill", "#152394").attr("stroke", "black").attr("r", 0).transition().delay(3000).attr("r",5);
    // svg.selectAll(".node2").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("r", 0).attr("fill", "#152394").attr("stroke", "black").transition().delay(3000).attr("r",5);
     //svg.selectAll(".node3").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("r", 0).attr("fill", "#152394").attr("stroke", "black").transition().delay(3000).attr("r",5);
@@ -305,30 +376,48 @@ function changeVis1(){
         .transition()
         .duration(3000)
         .attrTween("d", function(d, i){
-            var dimensions,
-                path_string;
-            // specify the dimensions
-            dimensions = {
-                x: 10*i+150,
-                y: height - 3*i,
-                height: 3*i,
-                width: 5
-            };
-            // calculate the path string from the dimensions
-            path_string = d3.rect(dimensions);
+            console.log(d.id)
+            var s = states_alpha[d.id]
+            if (s !== "NULL") {
+                var c = incidentByState[s]
+                //console.log(s)
+                var h = numIncidents(c)
+                console.log(h)
+                var dimensions,
+                    path_string;
+                // specify the dimensions
+                if (h===0){
+                    h = 1;
+                }
+                dimensions = {
+                    x: 10 * i + 150,
+                    y: height - h,
+                    height: h,
+                    width: 5
+                };
 
+                console.log(dimensions)
 
-            var interpolator = flubber.interpolate(path_string, path(d));
-
-            return interpolator;})
+                // calculate the path string from the dimensions
+                //if (typeof dimensions != 'undefined') {
+                console.log(s)
+                path_string = d3.rect(dimensions);
+                var interpolator = flubber.interpolate(path_string, path(d));
+                console.log(interpolator)
+                return interpolator;
+            }
+        })
         //.attr("d", path)
         .attr("fill", function(d){
             d.id = +d.id;
-            var info =climateVis[d.id];
-            if (typeof info != 'undefined'){
-                return color(info.avgTemp)}
-            else{
-                return "gray"
+            var st = states_alpha[d.id]
+            if (st !== "NULL"){
+                var info = climateByState[st];
+                if (typeof info != 'undefined'){
+                    return color(+info.avgTemp)}
+                else{
+                    return "gray"
+                }
             }
         });
     map.exit().remove();
