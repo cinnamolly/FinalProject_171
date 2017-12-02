@@ -14,7 +14,7 @@ LineChart = function(_parentElement, file1, file2){
     this.displayData = []; // see data wrangling
 
     // DEBUG RAW DATA
-    console.log(this.climateData);
+    //console.log(this.climateData);
     //console.log(this.tornData);
 
     this.initVis();
@@ -27,13 +27,13 @@ LineChart.prototype.initVis = function() {
     vis.parseDate = d3.timeParse("%Y");
     vis.dateParser = d3.timeParse("%Y-%m-%d");
 
-    vis.margin = { top: 40, right: 30, bottom: 60, left: 60 };
+    vis.margin = { top: 40, right: 80, bottom: 60, left: 60 };
 
     vis.width = 800 - vis.margin.left - vis.margin.right,
         vis.height = 400 - vis.margin.top - vis.margin.bottom;
 
     vis.selectedState = "AL";
-    vis.selected = "DEATHS_DIRECT";
+    vis.selected = "DEATHS";
 
     vis.climateData.forEach(function (d) {
         if (d.state.toUpperCase() in vis.temp) {
@@ -84,12 +84,11 @@ LineChart.prototype.initVis = function() {
         .attr("class", "y-axis axis");
 
     vis.svg.append("g")
-        .attr("transform", "translate(" + (800 - vis.margin.left - 30) + ",0)")
+        .attr("transform", "translate(" + (800 - vis.margin.left - 80) + ",0)")
         .attr("class", "y-axis2 axis");
 
-    console.log(vis.temp);
-
-    vis.temp = insertRelevantData(vis.temp, vis.allData,["DEATHS_DIRECT"]);
+    vis.temp = insertRelevantData(vis.temp, vis.allData,["DEATHS", "INJURIES", "DAMAGE"]);
+    //vis.temp = insertRelevantData(vis.temp, vis.allData,["DAMAGE"]);
 
     this.updateVis(vis.selected, vis.selectedState);
 }
@@ -101,8 +100,6 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
     vis.selectedState = selectedState;
 
     vis.displayData = vis.temp[states[vis.selectedState]];
-
-    console.log(vis.temp);
 
     vis.y = d3.scaleLinear()
         .range([vis.height, 0])
@@ -173,18 +170,23 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
 
 
 function insertRelevantData(temp, data, values) {
+    var map = {"DEATHS": ["DEATHS_DIRECT", "DEATHS_INDIRECT"], "INJURIES": ["INJURIES_DIRECT", "INJURIES_INDIRECT"], "DAMAGE":["DAMAGE_PROPERTY", "DAMAGE_CROPS"]};
+
     values.forEach(function (t) {
         data.forEach(function (d) {
             if (d["STATE"] !== "") {
                 if (d["STATE"] in temp) {
                     if (typeof temp[d["STATE"]][(+d["YEAR"] - 1980)] !== 'undefined') {
-                        if (t in temp[d["STATE"]][(+d["YEAR"] - 1980)])
-                        {
-                            temp[d["STATE"]][(+d["YEAR"] - 1980)][t] += +d[t];
-                        }
-                        else {
-                            temp[d["STATE"]][(+d["YEAR"] - 1980)][t] = +d[t];
-                        }
+                        map[t].forEach(function(w) {
+                            if (t in temp[d["STATE"]][(+d["YEAR"] - 1980)])
+                            {
+                                temp[d["STATE"]][(+d["YEAR"] - 1980)][t] += translate(d[w]);
+                            }
+                            else {
+                                temp[d["STATE"]][(+d["YEAR"] - 1980)][t] = translate(d[w]);
+                            }
+
+                        });
                     }
                 }
             }
@@ -192,4 +194,32 @@ function insertRelevantData(temp, data, values) {
     });
 
     return temp;
+}
+
+function translate(value) {
+    if (value[value.length - 1] === "K" || value[value.length - 1] === "k") {
+        return +(value.substring(0, value.length - 1)) * 1000;
+    }
+    else if (value[value.length - 1] === "M") {
+        return +(value.substring(0, value.length - 1)) * 1000000;
+    }
+    else if (value[value.length - 1] === "B") {
+        return +(value.substring(0, value.length - 1)) * 1000000000;
+    }
+    else if (value[value.length - 1] === "T") {
+        return +(value.substring(0, value.length - 1)) * 1000000000000;
+    }
+    else if (value[value.length - 1] === "h" || value[value.length - 1] === "H") {
+        return +(value.substring(0, value.length - 1)) * 100;
+    }
+    else if (value[value.length - 1] === "?") {
+        return +(value.substring(0, value.length - 1));
+    }
+    else if (value.length !== 0) {
+        return +value;
+    }
+    else {
+        return 0;
+    }
+
 }
