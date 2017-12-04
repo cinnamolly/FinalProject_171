@@ -28,7 +28,7 @@ var path = d3.geoPath()
     .projection(scale(0.6,width,height));
 var parseDate = d3.timeParse("%Y-%m-%d");
 
-
+var labels = ["Severe Weather Event", "Severe Weather Event","4.0", "3.0", "1.0", "-1.0", "-2.0", "-3.0", "-4.0"]
 
 queue()
     .defer(d3.json, "https://unpkg.com/us-atlas@1/us/10m.json")
@@ -135,11 +135,26 @@ function updateVis(){
 
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
+    console.log(max_avg)
+    console.log(min_avg)
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
        // .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"])
     .range(['#c51b7d','#de77ae','#f1b6da','#fde0ef','#c7eae5','#80cdc1','#35978f','#01665e']);
 
+    var text = svg.selectAll("g")
+        .data(labels)
+        .enter()
+        .append("text")
+    text.attr("class", "label")
+        .attr("x", 820)
+        .attr("y", function(d,i){
+            return i*36+80
+        })
+        .attr("fill", "white")
+        .text(function(d){
+            return d;
+        });
     var map = bet
         .selectAll("path")
         .data(america, function(d){
@@ -196,6 +211,7 @@ function updateVis(){
     map.exit().remove();
 
     console.log(color.range());
+
 
     d3.select("svg").selectAll("rect")
         .data(color.range())

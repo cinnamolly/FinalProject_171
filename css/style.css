@@ -29,6 +29,10 @@
 
 }
 
+.label{
+  color: white
+}
+
 .hero-image-2{
   /* The image used */
   background-image: url("../img/banner-2.jpg");
