@@ -12,6 +12,10 @@
   font-size: 50px;
 }
 
+.tooltip{
+  background-color: black;
+  padding: 5px;
+}
 .hero-image {
   /* The image used */
   background-image: url("../img/banner.jpg");
@@ -27,6 +31,10 @@
   position: relative;
   box-shadow: 3px 3px 3px 3px black;
 
+}
+
+.label{
+  color: white
 }
 
 .hero-image-2{

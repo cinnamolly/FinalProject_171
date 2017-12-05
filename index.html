@@ -39,6 +39,7 @@
 	<div class = "row-fluid lit">
 		<div class= "col-sm-8 visual1 choro-visual">
 			<h4>State Temperature Change and Weather Events by Year</h4>
+			<input type="checkbox" id="myCheckbox" onclick="updateVis()"> Hide Events
 			<button id= "button" onclick="visTrans()">Bar Chart</button>
 			<label for="dateRange"
 				   style="display: inline-block; width: 240px; text-align: right">
@@ -84,8 +85,9 @@
 				<div class="form-group">
 					<label for="ranking-type">Data:</label>
 					<select class="form-control" id="ranking-type">
-						<option value="fat">Fatalities</option>
-						<option value="loss">Money Lost</option>
+						<option value="DEATHS">Fatalities</option>
+						<option value="INJURIES">Injuries</option>
+						<option value="DAMAGE">Money Lost</option>
 					</select>
 				</div>
 			</form>

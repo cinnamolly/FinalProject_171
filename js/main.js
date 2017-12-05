@@ -1,9 +1,7 @@
 
 // Will be used to the save the loaded JSON data
 var allData = [];
-var tornData = [];
-var hailData = [];
-var windData = [];
+var areaData = [];
 var climateData = [];
 
 
@@ -32,16 +30,12 @@ function loadCsvData(){
     d3.queue()
         .defer(d3.json, "data/thw_data.json")
         .defer(d3.csv, "data/variance.csv")
-        .defer(d3.csv, "data/1950-2016_torn.csv")
-        .defer(d3.csv, "data/1955-2016_hail.csv")
-        .defer(d3.csv, "data/1955-2016_wind.csv")
-        .await(function(error, file1, file2, file3, file4, file5) {
+        .defer(d3.csv, "data/171_totalData.csv")
+        .await(function(error, file1, file2, file3) {
             if (!error){
-                allData = file1.data;
+                areaData = file1.data;
                 climateData = file2;
-                tornData = file3;
-                hailData = file4;
-                windData = file5;
+                allData = file3;
 
                 console.log(file1);
             }
@@ -63,11 +57,11 @@ function createVis() {
 
 	// TO-DO: Instantiate visualization objects here
     //climate = new ChoroplethMap("choro");
-    areachart = new StackedAreaChart("stacked-area-chart", allData);
+    areachart = new StackedAreaChart("stacked-area-chart", areaData);
 
-    timeline = new Timeline("timeline", allData);
+    timeline = new Timeline("timeline", areaData);
 
-    line = new LineChart("line-chart", allData, climateData, tornData, hailData, windData);
+    line = new LineChart("line-chart", climateData, allData);
 }
 
 
