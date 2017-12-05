@@ -223,6 +223,7 @@ StackedAreaChart.prototype.updateVis = function(){
         .style("fill", function(d,i) {
             return colorScale(dataCategories[i]);
         })
+        .transition()
         .attr("d", function(d) {
             return vis.area(d);
         });

@@ -42,8 +42,9 @@
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  box-shadow: 5px 5px 5px 5px black;
+  box-shadow: 5px 5px 5px 5px #12161A;
   padding: 0;
+  z-index: 1000;
 
 }
 
@@ -263,20 +264,23 @@ h2 {
 
 /* video */
 #myVideo {
-  position: fixed;
+
+  width: 100%;
   right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
+  bottom: 50%;
+
 }
 
 .content {
-  position: fixed;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
   color: #f1f1f1;
-  width: 100%;
+  width: 30%;
+  height:315px;
   padding: 20px;
+  border-right: solid;
+  border-right-color: crimson;
+  position: absolute;
+  top: 300px; right: 0; bottom: 0; left: 0;
 }
 
 #myBtn {
