@@ -29,7 +29,9 @@ var path = d3.geoPath()
 var parseDate = d3.timeParse("%Y-%m-%d");
 
 var labels = ["Severe Weather Event", "Severe Weather Event","4.0", "3.0", "1.0", "-1.0", "-2.0", "-3.0", "-4.0"]
-
+var div = d3.select("#choro").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 queue()
     .defer(d3.json, "https://unpkg.com/us-atlas@1/us/10m.json")
     .defer(d3.csv, "data/variance.csv")
@@ -155,6 +157,21 @@ function updateVis(){
         .text(function(d){
             return d;
         });
+
+    // var text2 = svg.selectAll("g")
+    //     .data(states_pure_alpha)
+    //     .enter()
+    //     .append("text")
+    // text2.attr("class", "label")
+    //     .attr("x", 820)
+    //     .attr("y", function(d,i){
+    //         return i*15-120
+    //     })
+    //     .attr("fill", "white")
+    //     .attr("transform", "translate(600,-400) rotate(90)")
+    //     .text(function(d){
+    //         return d;
+    //     });
     var map = bet
         .selectAll("path")
         .data(america, function(d){
@@ -166,6 +183,19 @@ function updateVis(){
         })
         .on("mouseover", function(d){
             console.log(d3.select(this).attr("class"));
+            var st = states_alpha[d.id]
+            console.log("HERE")
+            div.transition()
+                .duration(200)
+                .style("opacity", .9)
+            div.html(st+ "<br/> Incidents: " + incidentByState[st])
+                .style("top", (d3.event.pageY-800)+"px")
+                .style("left",(d3.event.pageX-35)+"px");;
+            })
+        .on("mouseout",function(d){
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
         })
         .merge(map)
         .transition()
@@ -183,29 +213,35 @@ function updateVis(){
                 }
             }
         });
-    var node = svg.selectAll(".node1")
-        .data(nodeFilter);
-    node.enter().append("circle")
-        .attr("class", "node1")
-        .merge(node)
-        .transition()
-        .duration(1000)
-        .attr("r", 5)
-        .attr("transform", function(d) {
-            var p = projection([d.longitude, d.latitude])
-            if (p != null)
-            {
-                var x = p[0]*.7+215
-                var y = p[1]*.7+155
-                return "translate(" +x+","+y+")";
-            }
-            return;
-        })
-        .attr("fill", "#152394")
-        .attr("stroke", "black")
-        .attr("fill-opacity", 0.5)
-        .attr("stroke-opacity", 0.5);
+        var node = svg.selectAll(".node1")
+            .data(nodeFilter);
+        node.enter().append("circle")
+            .attr("class", "node1")
+            .merge(node)
+            .transition()
+            .duration(1000)
+            .attr("r", 5)
+            .attr("transform", function (d) {
+                var p = projection([d.longitude, d.latitude])
+                if (p != null) {
+                    var x = p[0] * .7 + 215
+                    var y = p[1] * .7 + 155
+                    return "translate(" + x + "," + y + ")";
+                }
+                return;
+            })
+            .attr("fill", "#152394")
+            .attr("stroke", "black")
 
+    if (d3.select("#myCheckbox").property("checked")) {
+        node.attr("fill-opacity", 0.0)
+            .attr("stroke-opacity", 0.0);
+    }
+    else{
+        node.attr("fill-opacity", 0.5)
+            .attr("stroke-opacity", 0.5);;
+
+    }
     node.exit().transition().attr("r", 0).remove();
 
     map.exit().remove();
@@ -287,12 +323,26 @@ function changeVis(){
         .data(america, function(d){
             return d.id;
         });
-
     map.enter().append("path")
         .attr("class", function(d){
             return "state-" + d.id.toString();
         })
         .merge(map)
+        .on("mouseover", function(d){
+            var st = states_alpha[d.id]
+            console.log("HERE")
+            div.transition()
+                .duration(200)
+                .style("opacity", .9)
+            div.html(st+ "<br/> Incidents: " + incidentByState[st])
+                .style("top", (d3.event.pageY-800)+"px")
+                .style("left",(d3.event.pageX-35)+"px");;
+        })
+        .on("mouseout",function(d){
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+        })
         .transition()
         .duration(3000)
         .attrTween("d", function(d, i) {
@@ -374,8 +424,10 @@ function changeVis1(){
         interior['avgTemp'] = d.avgTemp;
         climateByState[d.state] = interior;
     })
-    svg.selectAll(".node1").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("fill", "#152394").attr("stroke", "black").attr("r", 0).transition().delay(3000).attr("r",5);
-   // svg.selectAll(".node2").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("r", 0).attr("fill", "#152394").attr("stroke", "black").transition().delay(3000).attr("r",5);
+    if(d3.select("#myCheckbox").property("checked") === false) {
+        svg.selectAll(".node1").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("fill", "#152394").attr("stroke", "black").attr("r", 0).transition().delay(3000).attr("r", 5);
+    }
+        // svg.selectAll(".node2").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("r", 0).attr("fill", "#152394").attr("stroke", "black").transition().delay(3000).attr("r",5);
     //svg.selectAll(".node3").attr("fill-opacity", .5).attr("stroke-opacity", 0.5).attr("r", 0).attr("fill", "#152394").attr("stroke", "black").transition().delay(3000).attr("r",5);
     america = america.sort(function(a,b){
         return a.id - b.id;
@@ -389,6 +441,22 @@ function changeVis1(){
 
     map.enter().append("path")
         .merge(map)
+        .on("mouseover", function(d){
+            console.log(d3.select(this).attr("class"));
+            var st = states_alpha[d.id]
+            console.log("HERE")
+            div.transition()
+                .duration(200)
+                .style("opacity", .9)
+            div.html(st+ "<br/> Incidents: " + incidentByState[st])
+                .style("top", (d3.event.pageY-800)+"px")
+                .style("left",(d3.event.pageX-35)+"px");;
+        })
+        .on("mouseout",function(d){
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+        })
         .transition()
         .duration(3000)
         .attrTween("d", function(d, i){
