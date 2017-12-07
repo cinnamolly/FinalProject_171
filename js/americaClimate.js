@@ -15,7 +15,8 @@ var svg = d3.select("#choro").append("svg")
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(-150,-60)");
-
+var time_labels=["0", "1980", "2016"];
+var label1 = ["Severe","Variance"]
 var bet = svg.append("g")
     .attr("class", "states");
 var nodes=[];
@@ -144,6 +145,18 @@ function updateVis(){
        // .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"])
     .range(['#c51b7d','#de77ae','#f1b6da','#fde0ef','#c7eae5','#80cdc1','#35978f','#01665e']);
 
+    var text3 = svg.selectAll("g")
+        .data(label1)
+        .enter()
+        .append("text")
+    text3.attr("class", "label")
+        .attr("x", 85)
+        .attr("y", -460)
+        .attr("transform", "translate(300,150) rotate(90)")
+        .attr("fill", "white")
+        .text(function(d){
+            return d;
+        });
     var text = svg.selectAll("g")
         .data(labels)
         .enter()
@@ -157,6 +170,20 @@ function updateVis(){
         .text(function(d){
             return d;
         });
+    var text2 = svg.selectAll("g")
+        .data(time_labels)
+        .enter()
+        .append("text")
+    text2.attr("class", "label")
+        .attr("x", function(d, i){
+            return 760*i -610;
+        })
+        .attr("y", 70)
+        .attr("fill", "white")
+        .text(function(d){
+            return d;
+        });
+
 
     var map = bet
         .selectAll("path")
