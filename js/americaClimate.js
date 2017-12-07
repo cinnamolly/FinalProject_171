@@ -68,21 +68,7 @@ queue()
             interior_data['year'] = d.YEAR;
             interior_data['damage'] = d.DAMAGE_PROPERTY;
             nodes.push(interior_data)
-            var st = (d.STATE).toLowerCase()
-            st = st.charAt(0).toUpperCase() + st.slice(1)
-            var n = st.indexOf(" ");
-            if (n!== -1){
-                st = st.slice(0,n) + " " +st.charAt(n+1).toUpperCase() + st.slice(n+2)
-            }
-            if (incidentByState[st]){
-                incidentByState[st] += 1
-            }
-            else{
-                incidentByState[st] = 1
-            }
-
         });
-        console.log(incidentByState)
         updateVis();
     });
 
@@ -122,20 +108,47 @@ function updateVis(){
         climateByState[d.state] = interior;
     })
 
-    var c = 0;
 
+    var c = 0;
+    var selected = d3.select("#ranking").property("value");
+    console.log(selected)
     var nodeFilter = nodes.filter(function(d){
-        return (+d.year === timeScale(selection)) && ((d.damage !== "0") || (d.damage !== "0K"));
+        if (selected === "all") {
+            return (+d.year === timeScale(selection)) && ((d.damage !== "0") || (d.damage !== "0K"));
+        }
+        return (d.event === selected && +d.year === timeScale(selection)) && ((d.damage !== "0") || (d.damage !== "0K"))
     })
-    var nodeFilter = nodeFilter.filter(function(d){
-        c = c+1
-        if (c ===10){
-            c=0
+    var nodeFilter = nodeFilter.filter(function (d) {
+        c = c + 1
+        if (c === 10) {
+            c = 0
             return d;
         }
     })
     console.log(nodeFilter)
-
+    nodeFilter.forEach(function(d){
+        var st = (d.state).toLowerCase()
+        st = st.charAt(0).toUpperCase() + st.slice(1)
+        var n = st.indexOf(" ");
+        if (n!== -1){
+            st = st.slice(0,n) + " " +st.charAt(n+1).toUpperCase() + st.slice(n+2)
+        }
+        if (incidentByState[st]){
+            if (selected === "all"){
+                incidentByState[st] += 1}
+            else if(d.event === selected){
+                incidentByState[st] += 1
+            }
+        }
+        else{
+            if (selected === "all"){
+                incidentByState[st] = 1}
+            else if(d.event === selected){
+                incidentByState[st] = 1
+            }
+        }
+    })
+    console.log(incidentByState)
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
     console.log(max_avg)

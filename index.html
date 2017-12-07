@@ -40,6 +40,23 @@
 	<div class = "row-fluid lit">
 		<div class= "col-sm-8 visual1 choro-visual">
 			<h4>State Temperature Change and Weather Events by Year</h4>
+			<form class="form-inline">
+				<div class="form-group">
+					<label for="rankingType">Filter by</label>
+					<select class="form-control" id="ranking" onchange="updateVis()">
+						<option value="all">All Events</option>
+						<option value="Blizzard">Blizzard</option>
+						<option value="Flood">Flood</option>
+						<option value="Hail">Hail</option>
+						<option value="Hurricane">Hurricane</option>
+						<option value="Thunderstorm">Thunderstorm</option>
+						<option value="Tornado">Tornado</option>
+						<option value="Tropical Storm">Tropical Storm</option>
+						<option value="Tsunami">Tsunami</option>
+						<option value="Wildfire">Wildfire</option>
+					</select>
+				</div>
+			</form>
 			<input type="checkbox" id="myCheckbox" onclick="updateVis()"> Hide Events
 			<button id= "button" onclick="visTrans()">Bar Chart</button>
 			<label for="dateRange"
