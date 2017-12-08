@@ -17,9 +17,13 @@
 <div id="navbar">
 	<ul>
 	<li><a href="#overview" class="active">Overview</a></li>
-	<li><a href="#climatechange">Climate Change</a></li>
+	<li><a href="#uptick" class="active">Uptick in Weather Events</a></li>
 	<li><a href="#severeweather">Severe Weather</a></li>
-	<li><a href="#damage">Damage</a></li>
+		<li><a href="#newspaper">What the News is Saying</a></li>
+		<li><a href="#damage">Damage</a></li>
+		<li><a href="#storms">Specific Storms</a></li>
+		<li><a href="#climatechange">Climate Change</a></li>
+
 	</ul>
 </div>
 
@@ -43,44 +47,13 @@
 	</div>
 </div>
 </div>
-		<div class="container-fluid data" id="climatechange">
-	<div class = "row-fluid lit">
-		<div class= "col-sm-8 visual1 choro-visual">
-			<h4>State Temperature Change and Weather Events by Year</h4>
-			<form class="form-inline">
-				<div class="form-group">
-					<label for="rankingType">Filter by</label>
-					<select class="form-control" id="ranking" onchange="updateVis()">
-						<option value="all">All Events</option>
-						<option value="Blizzard">Blizzard</option>
-						<option value="Flood">Flood</option>
-						<option value="Hail">Hail</option>
-						<option value="Hurricane">Hurricane</option>
-						<option value="Thunderstorm">Thunderstorm</option>
-						<option value="Tornado">Tornado</option>
-						<option value="Tropical Storm">Tropical Storm</option>
-						<option value="Tsunami">Tsunami</option>
-						<option value="Wildfire">Wildfire</option>
-					</select>
-				</div>
-			</form>
-			<input type="checkbox" id="myCheckbox" onclick="updateVis()"> Hide Events
-			<button id= "button" onclick="visTrans()">Bar Chart</button>
-			<label for="dateRange"
-				   style="display: inline-block; width: 240px; text-align: right">
-				Year: <span id="dateRange-value"></span>
-			</label>
-			<input type="range" step='1' min="0" max="36" id="dateRange" onchange=updateVis()>
-			<div class = "choropleth">
-				<div id="choro"></div>
-			</div>
-		</div>
-		<div class= "col-sm-4 text choro-text bet">
-			<h3>This is something that we noticed about the location weather events and temperature change.</h3>
-		</div>
-	</div>
-		</div>
 
+<div class="container-fluid data" id="uptick">
+	<div class = "row-fluid">
+		<div class = "col-md-12">
+			<div class="section"><h2>Uptick in Severe Weather Events</h2><h5>For the last three decades.</h5></div>
+		</div>
+	</div></div>
 
 <div class="container-fluid data" id="severeweather">
 	<div class = "row-fluid">
@@ -101,6 +74,13 @@
 		</div>
 	</div>
 </div>
+
+<div class="container-fluid data" id="newspaper">
+	<div class = "row-fluid">
+		<div class = "col-md-12">
+			<div class="section"><h2>What Newspapers Have Been Saying</h2><h5>Claims of correlation.</h5></div>
+		</div>
+	</div></div>
 
 <div class="container-fluid data" id="damage">
 	<div class = "row-fluid">
@@ -184,6 +164,60 @@
 		</div>
 		<div class= "col-md-2 text line-text2">
 			<h5>Text: Damage ($)</h5>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid data" id="storms">
+	<div class = "row-fluid lit">
+		<div class = "col-md-12">
+			<div class="section"><h2>Major Storms</h2><h5>Damage and Climate.</h5></div>
+		</div>
+	</div>
+	<div class = "row-fluid lit">
+		<div class = "col-md-3">
+			<div class="section"><img src="img/sandy.jpg" alt="Avatar" class="image">
+				<div class="overlay">
+					<div class="text">Hurricane Sandy</div>
+				</div></div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid data" id="climatechange">
+	<div class = "row-fluid lit">
+		<div class= "col-sm-8 visual1 choro-visual">
+			<h4>State Temperature Change and Weather Events by Year</h4>
+			<form class="form-inline">
+				<div class="form-group">
+					<label for="rankingType">Filter by</label>
+					<select class="form-control" id="ranking" onchange="updateVis()">
+						<option value="all">All Events</option>
+						<option value="Blizzard">Blizzard</option>
+						<option value="Flood">Flood</option>
+						<option value="Hail">Hail</option>
+						<option value="Hurricane">Hurricane</option>
+						<option value="Thunderstorm">Thunderstorm</option>
+						<option value="Tornado">Tornado</option>
+						<option value="Tropical Storm">Tropical Storm</option>
+						<option value="Tsunami">Tsunami</option>
+						<option value="Wildfire">Wildfire</option>
+					</select>
+				</div>
+			</form>
+			<input type="checkbox" id="myCheckbox" onclick="updateVis()"> Hide Events
+			<button id= "button" onclick="visTrans()">Bar Chart</button>
+			<label for="dateRange"
+				   style="display: inline-block; width: 240px; text-align: right">
+				Year: <span id="dateRange-value"></span>
+			</label>
+			<input type="range" step='1' min="0" max="36" id="dateRange" onchange=updateVis()>
+			<div class = "choropleth">
+				<div id="choro"></div>
+			</div>
+		</div>
+		<div class= "col-sm-4 text choro-text bet">
+			<h3>This is something that we noticed about the location weather events and temperature change.</h3>
 		</div>
 	</div>
 </div>
