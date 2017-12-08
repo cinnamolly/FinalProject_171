@@ -15,7 +15,8 @@ var svg = d3.select("#choro").append("svg")
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(-150,-60)");
-
+var time_labels=["0", "1980", "2016"];
+var label1 = ["Severe","Variance"]
 var bet = svg.append("g")
     .attr("class", "states");
 var nodes=[];
@@ -67,21 +68,7 @@ queue()
             interior_data['year'] = d.YEAR;
             interior_data['damage'] = d.DAMAGE_PROPERTY;
             nodes.push(interior_data)
-            var st = (d.STATE).toLowerCase()
-            st = st.charAt(0).toUpperCase() + st.slice(1)
-            var n = st.indexOf(" ");
-            if (n!== -1){
-                st = st.slice(0,n) + " " +st.charAt(n+1).toUpperCase() + st.slice(n+2)
-            }
-            if (incidentByState[st]){
-                incidentByState[st] += 1
-            }
-            else{
-                incidentByState[st] = 1
-            }
-
         });
-        console.log(incidentByState)
         updateVis();
     });
 
@@ -121,20 +108,47 @@ function updateVis(){
         climateByState[d.state] = interior;
     })
 
-    var c = 0;
 
+    var c = 0;
+    var selected = d3.select("#ranking").property("value");
+    console.log(selected)
     var nodeFilter = nodes.filter(function(d){
-        return (+d.year === timeScale(selection)) && ((d.damage !== "0") || (d.damage !== "0K"));
+        if (selected === "all") {
+            return (+d.year === timeScale(selection)) && ((d.damage !== "0") || (d.damage !== "0K"));
+        }
+        return (d.event === selected && +d.year === timeScale(selection)) && ((d.damage !== "0") || (d.damage !== "0K"))
     })
-    var nodeFilter = nodeFilter.filter(function(d){
-        c = c+1
-        if (c ===10){
-            c=0
+    var nodeFilter = nodeFilter.filter(function (d) {
+        c = c + 1
+        if (c === 10) {
+            c = 0
             return d;
         }
     })
     console.log(nodeFilter)
-
+    nodeFilter.forEach(function(d){
+        var st = (d.state).toLowerCase()
+        st = st.charAt(0).toUpperCase() + st.slice(1)
+        var n = st.indexOf(" ");
+        if (n!== -1){
+            st = st.slice(0,n) + " " +st.charAt(n+1).toUpperCase() + st.slice(n+2)
+        }
+        if (incidentByState[st]){
+            if (selected === "all"){
+                incidentByState[st] += 1}
+            else if(d.event === selected){
+                incidentByState[st] += 1
+            }
+        }
+        else{
+            if (selected === "all"){
+                incidentByState[st] = 1}
+            else if(d.event === selected){
+                incidentByState[st] = 1
+            }
+        }
+    })
+    console.log(incidentByState)
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
     console.log(max_avg)
@@ -144,6 +158,18 @@ function updateVis(){
        // .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"])
     .range(['#c51b7d','#de77ae','#f1b6da','#fde0ef','#c7eae5','#80cdc1','#35978f','#01665e']);
 
+    var text3 = svg.selectAll("g")
+        .data(label1)
+        .enter()
+        .append("text")
+    text3.attr("class", "label")
+        .attr("x", 85)
+        .attr("y", -460)
+        .attr("transform", "translate(300,150) rotate(90)")
+        .attr("fill", "white")
+        .text(function(d){
+            return d;
+        });
     var text = svg.selectAll("g")
         .data(labels)
         .enter()
@@ -157,21 +183,21 @@ function updateVis(){
         .text(function(d){
             return d;
         });
+    var text2 = svg.selectAll("g")
+        .data(time_labels)
+        .enter()
+        .append("text")
+    text2.attr("class", "label")
+        .attr("x", function(d, i){
+            return 760*i -610;
+        })
+        .attr("y", 70)
+        .attr("fill", "white")
+        .text(function(d){
+            return d;
+        });
 
-    // var text2 = svg.selectAll("g")
-    //     .data(states_pure_alpha)
-    //     .enter()
-    //     .append("text")
-    // text2.attr("class", "label")
-    //     .attr("x", 820)
-    //     .attr("y", function(d,i){
-    //         return i*15-120
-    //     })
-    //     .attr("fill", "white")
-    //     .attr("transform", "translate(600,-400) rotate(90)")
-    //     .text(function(d){
-    //         return d;
-    //     });
+
     var map = bet
         .selectAll("path")
         .data(america, function(d){
@@ -232,9 +258,6 @@ function updateVis(){
             })
             .attr("fill", "#152394")
             .attr("stroke", "black");
-
-    console.log(d3.select("#myCheckbox").property("checked"));
-
 
     if (d3.select("#myCheckbox").property("checked")) {
         svg.selectAll(".node1").attr("fill-opacity", 0.0)
