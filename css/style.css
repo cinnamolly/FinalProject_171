@@ -1,11 +1,45 @@
 #line, #line2 {fill: none}
 
-#shiva {
-  font-family: 'Roboto', sans-serif;
-  font-size: 75px;
-  padding-bottom: 0;
+#navbar {
+  height: 75px;
+  overflow: hidden;
+  background-color:rgba(37, 44, 52, 0.8);
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  z-index: 1000;
+  box-shadow: 3px 3px 3px 3px black;
 }
 
+/* Links inside the navbar */
+#navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#navbar ul {
+  margin: 15px 0 0 0;
+}
+#navbar ul li {
+  list-style: none;
+  margin: 0 30px 0 0;
+  display: inline;
+}
+
+.active{
+  color: red;
+  border-bottom: solid;
+  border-bottom-color: red;
+}
+.active:after{
+  color: red;
+  border-bottom: solid;
+  border-bottom-color: red;
+}
 
 #opening{
   font-family: 'Roboto', sans-serif;
@@ -17,11 +51,12 @@
   padding: 5px;
 }
 .hero-image {
+  margin-top: 75px;
   /* The image used */
   background-image: url("../img/banner.jpg");
 
   /* Set a specific height */
-  height: 300px;
+  height: 345px;
 
   /* Position and center the image to scale nicely on all screens */
   background-attachment: fixed;
@@ -151,6 +186,7 @@ h2 {
 
 .section{
   padding: 0;
+  height: 40%;
 }
 
 .axis path,
@@ -162,6 +198,10 @@ h2 {
 
 .browser text {
   text-anchor: end;
+}
+
+.row-fluid{
+  height: 110%;
 }
 
 .visual1{
@@ -272,10 +312,8 @@ h2 {
 
 /* video */
 #myVideo {
-
   width: 100%;
   right: 0;
-  bottom: 50%;
 
 }
 
@@ -283,13 +321,15 @@ h2 {
   background: rgba(0, 0, 0, 0.3);
   color: #f1f1f1;
   width: 30%;
-  height:315px;
+  height: 700px;
   padding: 20px;
   border-right: solid;
   border-right-color: crimson;
   position: absolute;
-  top: 300px; right: 0; bottom: 0; left: 0;
+  top: 425px; right: 0; bottom: 0; left: 0;
 }
+
+
 
 #myBtn {
   width: 200px;

@@ -231,15 +231,18 @@ function updateVis(){
                 return;
             })
             .attr("fill", "#152394")
-            .attr("stroke", "black")
+            .attr("stroke", "black");
+
+    console.log(d3.select("#myCheckbox").property("checked"));
+
 
     if (d3.select("#myCheckbox").property("checked")) {
-        node.attr("fill-opacity", 0.0)
+        svg.selectAll(".node1").attr("fill-opacity", 0.0)
             .attr("stroke-opacity", 0.0);
     }
     else{
-        node.attr("fill-opacity", 0.5)
-            .attr("stroke-opacity", 0.5);;
+        svg.selectAll(".node1").attr("fill-opacity", 0.5)
+            .attr("stroke-opacity", 0.5);
 
     }
     node.exit().transition().attr("r", 0).remove();

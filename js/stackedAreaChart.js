@@ -77,7 +77,7 @@ StackedAreaChart.prototype.initVis = function(){
     // Scales and axes
     vis.x = d3.scaleTime()
         .range([0, vis.width])
-        .domain([dateParser("1980-01-01"), dateParser("2017-01-01")]);
+        .domain([dateParser("1980-01-01"), dateParser("2016-01-01")]);
 
     vis.y = d3.scaleLinear()
         .range([vis.height, 0]);
