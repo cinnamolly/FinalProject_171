@@ -13,6 +13,12 @@
   height: auto;
 }
 
+.storm{
+  color: white;
+  background-color: #252c34;
+  padding: 10px;
+}
+
 .overlay {
   position: absolute;
   bottom: 0;

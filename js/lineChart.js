@@ -101,6 +101,20 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
 
     var data_test = [1];
     var vis = this;
+
+    // vis.svg.append("circle")
+    //     .attr("class", "Dotted")
+    //     .attr("fill", "white")
+    //     .attr("cy", 340)
+    //     .attr("cx",340)
+    //     .attr("r", 50);
+    // vis.svg.append("circle")       // attach a circle
+    //     .attr("cx", 200)          // position the x-centre
+    //     .attr("cy", 100)          // position the y-centre
+    //     .attr("r", 50)            // set the radius
+    //     //.style("stroke-dasharray", ("10,3")) // make the stroke dashed
+    //     .style("stroke", "red")   // set the line colour
+    //     .style("fill", "none");
     vis.selected = selected;
     vis.selectedState = selectedState;
     var rect = vis.svg.selectAll("rect")
@@ -287,3 +301,137 @@ function translate(value) {
     }
 
 }
+
+
+LineChart.prototype.pic1 = function ()
+{
+    console.log("PIC1")
+    var vis = this;
+    var circ;
+    var txt;
+    var txt2;
+    setTimeout(function(){
+        txt = vis.svg.append("text")
+            .attr("class", "label")
+            .attr("fill", "white")
+            .attr("x", 320)
+            .attr("y", 30)
+            //.attr("dy", "0em")
+            .html("We can see that during Hurricane Sandy");
+        txt2 = vis.svg.append("text")
+                .attr("class", "label")
+                .attr("fill", "white")
+                .attr("x", 320)
+                .attr("y", 42)
+                .html("there was an uptick in weather variance.")
+        circ= vis.svg.append("circle")       // attach a circle
+            .attr("cx", 585)          // position the x-centre
+            .attr("cy", 30)          // position the y-centre
+            .attr("r", 50)            // set the radius
+            .style("stroke-dasharray", ("10,3")) // make the stroke dashed
+            .style("stroke", "red")   // set the line colour
+            .style("fill", "none");
+    }, 1200);
+
+    setTimeout(function(){
+            circ.transition()
+            .duration(3000)
+            .remove()
+        txt.transition()
+            .duration(3000)
+            .remove()
+        txt2.transition()
+            .duration(3000)
+            .remove()
+    }, 7000);
+
+    // d3.selectAll('circle').remove()
+    //     .transition()
+    //     .duration(3000);
+    //document.getElementById('img').style.display='block';
+}
+LineChart.prototype.pic2 = function ()
+{
+    console.log("PIC2")
+    var vis = this;
+    var circ;
+    var txt;
+    var txt2;
+    setTimeout(function(){
+        txt = vis.svg.append("text")
+            .attr("class", "label")
+            .attr("fill", "white")
+            .attr("x", 320)
+            .attr("y", 30)
+            //.attr("dy", "0em")
+            .html("We can see that during the Joplin Tornado");
+        txt2 = vis.svg.append("text")
+            .attr("class", "label")
+            .attr("fill", "white")
+            .attr("x", 320)
+            .attr("y", 42)
+            .html("there was an uptick in weather variance.")
+        circ= vis.svg.append("circle")       // attach a circle
+            .attr("cx", 585)          // position the x-centre
+            .attr("cy", 30)          // position the y-centre
+            .attr("r", 50)            // set the radius
+            .style("stroke-dasharray", ("10,3")) // make the stroke dashed
+            .style("stroke", "red")   // set the line colour
+            .style("fill", "none");
+    }, 1200);
+
+    setTimeout(function(){
+        circ.transition()
+            .duration(3000)
+            .remove()
+        txt.transition()
+            .duration(3000)
+            .remove()
+        txt2.transition()
+            .duration(3000)
+            .remove()
+    }, 7000);
+}
+LineChart.prototype.pic3 = function ()
+{
+    console.log("PIC3")
+    var vis = this;
+    var circ;
+    var txt;
+    var txt2;
+    setTimeout(function(){
+        txt = vis.svg.append("text")
+            .attr("class", "label")
+            .attr("fill", "white")
+            .attr("x", 200)
+            .attr("y", 30)
+            //.attr("dy", "0em")
+            .html("We can see that during Hurricane Katrina");
+        txt2 = vis.svg.append("text")
+            .attr("class", "label")
+            .attr("fill", "white")
+            .attr("x", 200)
+            .attr("y", 42)
+            .html("there was an uptick in weather variance.")
+        circ= vis.svg.append("circle")       // attach a circle
+            .attr("cx", 470)          // position the x-centre
+            .attr("cy", 30)          // position the y-centre
+            .attr("r", 50)            // set the radius
+            .style("stroke-dasharray", ("10,3")) // make the stroke dashed
+            .style("stroke", "red")   // set the line colour
+            .style("fill", "none");
+    }, 1200);
+
+    setTimeout(function(){
+        circ.transition()
+            .duration(3000)
+            .remove()
+        txt.transition()
+            .duration(3000)
+            .remove()
+        txt2.transition()
+            .duration(3000)
+            .remove()
+    }, 7000);
+}
+

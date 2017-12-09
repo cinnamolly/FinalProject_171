@@ -76,18 +76,25 @@ function brushed() {
     areachart.wrangleData();
 }
 
-function pic1()
-{
-    document.getElementById('img').style.display='block';
+function pic1() {
+    var selected = d3.select("#ranking-type").property("value","DAMAGE");
+    var selectedState = d3.select("#state-type").property("value", "NJ");
+    lineUpdate();
+    line.pic1();
 }
-function pic2()
-{
-    document.getElementById('img2').style.display='block';
+function pic2() {
+    var selected = d3.select("#ranking-type").property("value","DAMAGE");
+    var selectedState = d3.select("#state-type").property("value", "MO");
+    lineUpdate();
+    line.pic2();
 }
-function pic3()
-{
-    document.getElementById('img3').style.display='block';
+function pic3() {
+    var selected = d3.select("#ranking-type").property("value","DAMAGE");
+    var selectedState = d3.select("#state-type").property("value", "LA");
+    lineUpdate();
+    line.pic3();
 }
+
 
 
 d3.select("#ranking-type").on("change", lineUpdate);
@@ -96,7 +103,8 @@ d3.select("#state-type").on("change", lineUpdate);
 function lineUpdate() {
 
     var selected = d3.select("#ranking-type").property("value");
-    var selectedState = d3.select("#state-type").property("value");
 
+    var selectedState = d3.select("#state-type").property("value");
+    console.log(selectedState)
     line.updateVis(selected, selectedState);
 }
