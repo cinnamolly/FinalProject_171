@@ -90,14 +90,78 @@ LineChart.prototype.initVis = function() {
     vis.temp = insertRelevantData(vis.temp, vis.allData,["DEATHS", "INJURIES", "DAMAGE"]);
     //vis.temp = insertRelevantData(vis.temp, vis.allData,["DAMAGE"]);
 
+
     this.updateVis(vis.selected, vis.selectedState);
 }
 
 
 LineChart.prototype.updateVis = function(selected, selectedState) {
+    var colors =["#152394", "#06a7a4"]
+    var list = ["Severe Weather", "Climate Variance"]
+
+    var data_test = [1];
     var vis = this;
     vis.selected = selected;
     vis.selectedState = selectedState;
+    var rect = vis.svg.selectAll("rect")
+        .data(colors)
+        .enter()
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", function(d,i){
+            return -40+9*i;
+        })
+        .attr("fill", function(d){
+            return d;
+        })
+        .attr("stroke", "black")
+        .attr("height", 7)
+        .attr("width", 7);
+    var t = vis.svg.selectAll(".label2")
+        .data(data_test);
+    t.enter().append("text")
+        .attr("class", "label2")
+        .merge(t)
+        .transition()
+        .duration(1000)
+        .attr("x", 665)
+        .attr("y", 0)
+        .attr("fill", "white")
+        .text(function(d){
+            if (vis.selected === 'DAMAGE'){
+                return vis.selected + "($)"
+            }
+            return vis.selected;
+        });
+
+    var t2 = vis.svg.selectAll(".label3")
+        .data(list);
+    t2.enter().append("text")
+        .attr("class", "label3")
+        .merge(t2)
+        .transition()
+        .duration(1000)
+        .attr("x", 10)
+        .attr("y", function(d,i){
+            return -33+9*i;
+        })
+        .attr("fill", "white")
+        .text(function(d){
+            return d
+        });
+
+    t.exit().remove();
+    vis.svg.append("text")
+        .attr("fill", "white")
+        .attr("y", 340)
+        .attr("x",340)
+        .text("Year");
+
+    vis.svg.append("text")
+        .attr("fill", "white")
+        .attr("y", 0)
+        .attr("x",-60)
+        .text("VARIANCE");
 
     vis.displayData = vis.temp[states[vis.selectedState]];
 

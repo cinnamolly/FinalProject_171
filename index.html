@@ -171,16 +171,51 @@
 <div class="container-fluid data" id="storms">
 	<div class = "row-fluid lit">
 		<div class = "col-md-12">
-			<div class="section"><h2>Major Storms</h2><h5>Damage and Climate.</h5></div>
+			<div class="section"><h2>Major Storms</h2><h5>Hover to find out more.</h5></div>
 		</div>
 	</div>
 	<div class = "row-fluid lit">
-		<div class = "col-md-3">
-			<div class="section"><img src="img/sandy.jpg" alt="Avatar" class="image">
+		<div class = "col-md-4">
+			<h4>Hurricane Sandy</h4>
+			<div class="container"><img src="img/sandy.jpg" alt="Avatar" class="image">
 				<div class="overlay">
-					<div class="text">Hurricane Sandy</div>
-				</div></div>
+					<div class="text3">Date: October 22, 2012 <br> Damage: $75 billion <br> Fatalities: 233</div>
+				</div>
+				</div>
+			<br>
+			<button class="button" onclick="pic1()">Investigate Climate</button>
+			<br>
+			<img src = "img/newjersey.jpg" id = "img" style="display:none;"/>
+			<br>
+			<br>
 		</div>
+		<div class = "col-md-4">
+			<h4>Joplin Tornado</h4>
+			<div class="container"><img src="img/joplin.jpg" alt="Avatar" class="image">
+				<div class="overlay">
+					<div class="text3">Date: May 22, 2011 <br> Damage: $2.8 billion <br> Fatalities: 161</div>
+				</div></div>
+			<br>
+			<button class="button" onclick="pic2()">Investigate Climate</button>
+			<br>
+			<img src = "img/missouri.jpg" id = "img2" style="display:none;"/>
+			<br>
+			<br>
+		</div>
+		<div class = "col-md-4">
+			<h4>Hurricane Katrina</h4>
+			<div class="container"><img src="img/katrina.jpg" alt="Avatar" class="image">
+				<div class="overlay">
+					<div class="text3">Date: August 23, 2005 <br> Damage: $108 billion <br> Fatalities: 1,833</div>
+				</div></div>
+			<br>
+			<button class="button" onclick="pic3()">Investigate Climate</button>
+			<br>
+			<img src = "img/louisiana.jpg" id = "img3" style="display:none;"/>
+			<br>
+			<br>
+		</div>
+
 	</div>
 </div>
 
@@ -206,7 +241,7 @@
 				</div>
 			</form>
 			<input type="checkbox" id="myCheckbox" onclick="updateVis()"> Hide Events
-			<button id= "button" onclick="visTrans()">Bar Chart</button>
+			<button class= "button" onclick="visTrans()">Bar Chart</button>
 			<label for="dateRange"
 				   style="display: inline-block; width: 240px; text-align: right">
 				Year: <span id="dateRange-value"></span>

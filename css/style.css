@@ -1,6 +1,10 @@
 .container {
   position: relative;
-  width: 50%;
+  width: 100%;
+}
+
+.label3{
+  font-size: 9px;
 }
 
 .image {
@@ -11,31 +15,31 @@
 
 .overlay {
   position: absolute;
-  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 100%;
+  background-color: #61605f;
+  overflow: hidden;
   width: 100%;
-  opacity: 0;
+  height: 0;
   transition: .5s ease;
-  background-color: #008CBA;
 }
 
 .container:hover .overlay {
-  opacity: 1;
+  height: 100%;
 }
 
-.text {
+.text3 {
+  white-space: nowrap;
   color: white;
-  font-size: 20px;
+  font-size: 17px;
   position: absolute;
+  overflow: hidden;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
-
 
 #line, #line2 {fill: none}
 
@@ -178,7 +182,7 @@ h2 {
   margin-bottom: 40px;
 }
 
-#button{
+.button{
   width: 100px;
   border-radius: 5px 5px 5px 5px;
   color: #06A7A4;
@@ -195,7 +199,7 @@ h2 {
 }
 
 
-#button:hover{
+.button:hover{
   background-color: #06A7A4;
   color: white;
   -webkit-transition: background-color 200ms linear;

@@ -76,6 +76,19 @@ function brushed() {
     areachart.wrangleData();
 }
 
+function pic1()
+{
+    document.getElementById('img').style.display='block';
+}
+function pic2()
+{
+    document.getElementById('img2').style.display='block';
+}
+function pic3()
+{
+    document.getElementById('img3').style.display='block';
+}
+
 
 d3.select("#ranking-type").on("change", lineUpdate);
 d3.select("#state-type").on("change", lineUpdate);
