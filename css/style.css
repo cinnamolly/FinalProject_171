@@ -329,14 +329,17 @@ h1 {
   border-right-color: #06A7A4;
 }
 
+.form{
+  margin: 0.2px
+}
 .choro-text{
   border-left: solid;
   border-left-color: #06A7A4;
 }
 
-.choro-text h3{
-  text-align: left;
-  padding-left: 0.5cm;
+.choro-text h5{
+  text-align: center;
+  margin: 0.2cm;
 }
 
 .area-visual{

@@ -312,6 +312,11 @@ function visTrans(){
 }
 
 function changeVis(){
+    document.getElementById("ranking").disabled = true;
+    document.getElementById("myCheckbox").disabled = true;
+    document.getElementById("dateRange").disabled = true;
+
+
     var max_incidents = d3.max(d3.values(incidentByState));
     var min_incidents = d3.min(d3.values(incidentByState));
     console.log(min_incidents)
@@ -420,6 +425,11 @@ function changeVis(){
 }
 
 function changeVis1(){
+    document.getElementById("ranking").disabled = false;
+    document.getElementById("myCheckbox").disabled = false;
+    document.getElementById("dateRange").disabled = false;
+    document.getElementById("dateRange").style.color = "green";
+
     var max_incidents = d3.max(d3.values(incidentByState));
     var min_incidents = d3.min(d3.values(incidentByState));
     console.log(min_incidents)

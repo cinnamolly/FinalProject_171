@@ -380,9 +380,33 @@
 	<div class = "row-fluid lit" id="climatechangesection">
 		<div class= "col-sm-8 visual1 choro-visual">
 			<h4>State Temperature Change and Weather Events by Year</h4>
-			<form class="form-inline">
+
+
+			<label for="dateRange"
+				   style="display: inline-block; width: 240px; text-align: right">
+				Year: <span id="dateRange-value"></span>
+			</label>
+			<input type="range" step='1' min="0" max="36" id="dateRange" onchange=updateVis()>
+			<div class = "choropleth">
+				<div id="choro"></div>
+			</div>
+		</div>
+		<div class= "col-sm-4 text choro-text bet">
+			<br/>
+			<br/>
+
+			<h5>You've seen the uptick in severe weather events. You've seen the toll climate change takes. Now explore more and dive into the
+				detail of how climate change and severe weather events have changed over time for the whole nation.</h5>
+		<br/>
+			<h5>Use the timeline to change year, and hover over states to see the number of severe weather events that have happened in that particular state during that year.</h5>
+<br/>
+			<h5>Interact further by clikcing the buttons below - you can filter severe weather events to look at specific types,
+				hide weather events to focus just on climate variance, or transition the map to a bar-chart of states based on how
+				many severe weather events have occurred in that year.
+			</h5>
+			<form class="form">
 				<div class="form-group">
-					<label for="rankingType">Filter by</label>
+					<label for="ranking">Filter by</label>
 					<select class="form-control" id="ranking" onchange="updateVis()">
 						<option value="all">All Events</option>
 						<option value="Blizzard">Blizzard</option>
@@ -399,17 +423,8 @@
 			</form>
 			<input type="checkbox" id="myCheckbox" onclick="updateVis()"> Hide Events
 			<button class= "button" id=button onclick="visTrans()">Bar Chart</button>
-			<label for="dateRange"
-				   style="display: inline-block; width: 240px; text-align: right">
-				Year: <span id="dateRange-value"></span>
-			</label>
-			<input type="range" step='1' min="0" max="36" id="dateRange" onchange=updateVis()>
-			<div class = "choropleth">
-				<div id="choro"></div>
-			</div>
-		</div>
-		<div class= "col-sm-4 text choro-text bet">
-			<h3>This is something that we noticed about the location weather events and temperature change.</h3>
+
+
 		</div>
 	</div>
 </div>
