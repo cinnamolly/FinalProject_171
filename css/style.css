@@ -279,6 +279,7 @@ h1 {
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  height:700px;
 }
 
 .visual1{
@@ -518,4 +519,10 @@ h1 {
   padding-top: 5px;
   padding-left: 15%;
   padding-right: 15%;
+}
+
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
 }

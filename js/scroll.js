@@ -2,11 +2,11 @@ $(document).ready(function () {
     $(document).on("scroll", onScroll);
 
     //smoothscroll
-    $('a[href^="#"]').on('click', function (e) {
+    $('#navbar ul li a[href^="#"]').on('click', function (e) {
         e.preventDefault();
         $(document).off("scroll");
 
-        $('a').each(function () {
+        $('#navbar ul li a').each(function () {
             $(this).removeClass('activesec');
         });
         $(this).addClass('activesec');
