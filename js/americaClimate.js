@@ -81,8 +81,11 @@ function scale (scaleFactor,width,height) {
 }
 
 function updateVis(){
-    console.log("UPDATE VIS")
-    console.log(climateData)
+    if ($('#button').text() === "Choropleth"){
+        console.log("yay");
+        changeVis1();
+    }
+
     var timeScale = d3.scaleLinear()
         .domain([0,36])
         .range([1980, 2016]);
@@ -93,11 +96,11 @@ function updateVis(){
         d.date = +d.date;
         d.avgTemp = +d.avgTemp;
     });
-    console.log(climateData)
+
     climateVis = climateData.filter(function(d){
         return +d.date === timeScale(selection);
     });
-    console.log(climateVis)
+
 
     var climateByState = {};
 
@@ -111,7 +114,7 @@ function updateVis(){
 
     var c = 0;
     var selected = d3.select("#ranking").property("value");
-    console.log(selected)
+
     var nodeFilter = nodes.filter(function(d){
         if (selected === "all") {
             return (+d.year === timeScale(selection)) && ((d.damage !== "0") || (d.damage !== "0K"));
@@ -125,7 +128,7 @@ function updateVis(){
             return d;
         }
     })
-    console.log(nodeFilter)
+
     nodeFilter.forEach(function(d){
         var st = (d.state).toLowerCase()
         st = st.charAt(0).toUpperCase() + st.slice(1)
@@ -148,11 +151,10 @@ function updateVis(){
             }
         }
     })
-    console.log(incidentByState)
+
     var max_avg = d3.max(climateVis, function(d){ return d.avgTemp});
     var min_avg = d3.min(climateVis, function(d){ return d.avgTemp});
-    console.log(max_avg)
-    console.log(min_avg)
+
     var color = d3.scaleOrdinal()
         .domain([min_avg, max_avg])
        // .range(["#d73027","#f46d43","#fdae61","#fee090","#e0f3f8","#abd9e9","#74add1","#4575b4"])
@@ -210,7 +212,6 @@ function updateVis(){
         .on("mouseover", function(d){
             console.log(d3.select(this).attr("class"));
             var st = states_alpha[d.id]
-            console.log("HERE")
             div.transition()
                 .duration(200)
                 .style("opacity", .9)
@@ -271,8 +272,6 @@ function updateVis(){
     node.exit().transition().attr("r", 0).remove();
 
     map.exit().remove();
-
-    console.log(color.range());
 
 
     d3.select("svg").selectAll("rect")

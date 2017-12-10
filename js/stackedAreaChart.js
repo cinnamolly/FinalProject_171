@@ -130,6 +130,7 @@ StackedAreaChart.prototype.initVis = function(){
         .attr("fill", function(d) {
             return colorScale(d);
         })
+        .attr("fill-opacity", 0.7)
         .on("click", function(d, i){
             //vis.keys = ["tornadoes", "hail", "wind"];
 
@@ -153,7 +154,6 @@ StackedAreaChart.prototype.initVis = function(){
 
         });
 
-	// TO-DO: Tooltip placeholder
     vis.svg.selectAll("text")
         .data(vis.keys)
         .enter()
@@ -167,6 +167,13 @@ StackedAreaChart.prototype.initVis = function(){
         .text(function(d, i){
             return d;
         });
+
+    vis.svg.append("text")
+        .attr("font-size", "15px")
+        .attr("stroke", "white")
+        .attr("x", 530)
+        .attr("y", 0)
+        .text("Filter: ");
 
     vis.rec = vis.svg.append("svg")
         .attr("class", "rec")
@@ -197,13 +204,22 @@ StackedAreaChart.prototype.wrangleData = function(){
 
 
 /*
- * The drawing function - should use the D3 update sequence (enter, update, exit)
+ * The drawing function - should use the D3 update sequence (console.log(x0)enter, update, exit)
  * Function parameters only needed if different kinds of updates are needed
  */
 
 StackedAreaChart.prototype.updateVis = function(){
 	var vis = this;
-	// Update domain
+
+
+
+
+
+
+
+
+
+    // Update domain
 	// Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
 	vis.y.domain([0, d3.max(vis.displayData, function(d) {
 			return d3.max(d, function(e) {

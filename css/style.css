@@ -127,6 +127,10 @@ body{
   background-image: url("../img/banner.jpg");
 }
 
+#climatechange .hero-image{
+  background-image: url("../img/banner-2.jpg");
+}
+
 .hero-image h1{
   font-size:55px;
 }
@@ -279,6 +283,9 @@ h1 {
           0px 0px 9px 1px#0F1216,
           0px 0px 9px 1px#0F1216;
 
+}
+.bet:hover {
+  fill-opacity: 1;
 }
 .section h2{
   font-size: 40px;
