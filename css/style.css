@@ -107,7 +107,7 @@
   background-image: url("../img/banner.jpg");
 
   /* Set a specific height */
-  height: 345px;
+  height: 700px;
 
   /* Position and center the image to scale nicely on all screens */
   background-attachment: fixed;
@@ -237,7 +237,7 @@ h1 {
   height: 200px;
 }
 #uptick{
-  padding-top:400px;
+  width: 100%; height: 100%;
 }
 
 .axis path,
@@ -358,9 +358,6 @@ h1 {
 }
 
 
-
-
-
 /* video */
 #myVideo {
   width: 100%;
@@ -378,7 +375,7 @@ h1 {
   vertical-align: middle;
   color: #f1f1f1;
   width: 100%;
-  height: 700px;
+  height: 800px;
   padding: 20px;
   border-right: solid;
   border-right-color: crimson;
