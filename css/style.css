@@ -368,6 +368,11 @@ h1 {
   padding-right: 0.5cm;
 }
 
+.area-text h5{
+  text-align: right;
+  padding-right: 0.5cm;
+}
+
 .line-visual{
   border-left: solid;
   border-left-color: #D82492;
