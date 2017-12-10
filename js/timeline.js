@@ -88,6 +88,23 @@ Timeline.prototype.initVis = function(){
         .attr("fill", "#ccc")
         .attr("d", vis.area);
 
+    /**
+    var categories = vis.svg.selectAll(".area")
+        .data(vis.stackedData);
+
+    categories.enter().append("path")
+        .attr("class", "area")
+        .merge(categories)
+        .style("fill", function(d,i) {
+            return "#ccc";
+        })
+        .attr("d", function(d) {
+            return vis.area(d);
+        });
+     **/
+
+
+  // TO-DO: Initialize brush component
     var brush = d3.brushX()
         .extent([[0, 0], [vis.width, vis.height]])
         .on("brush", brushed);

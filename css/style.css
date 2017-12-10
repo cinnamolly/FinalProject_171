@@ -1,3 +1,7 @@
+body{
+  position: relative;
+}
+
 .container {
   position: relative;
   width: 100%;
@@ -22,7 +26,7 @@
   padding: 10px;
 }
 
-.overlay {
+#storms .overlay {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -34,7 +38,7 @@
   transition: .5s ease;
 }
 
-.container:hover .overlay {
+#storms .container:hover .overlay {
   height: 100%;
 }
 
@@ -82,12 +86,12 @@
   display: inline;
 }
 
-.active{
+.active-sec{
   color: red;
   border-bottom: solid;
   border-bottom-color: red;
 }
-.active:after{
+.active-sec:after{
   color: red;
   border-bottom: solid;
   border-bottom-color: red;
@@ -104,7 +108,7 @@
 }
 .hero-image {
   /* The image used */
-  background-image: url("../img/banner.jpg");
+  background-image: url("../img/severeweather-banner.jpg");
 
   /* Set a specific height */
   height: 345px;
@@ -117,6 +121,10 @@
   position: relative;
   box-shadow: 3px 3px 3px 3px black;
 
+}
+
+#damage .hero-image{
+  background-image: url("../img/banner.jpg");
 }
 
 .hero-image h1{
@@ -237,7 +245,6 @@ h1 {
   height: 200px;
 }
 #uptick{
-  padding-top:400px;
 }
 
 .axis path,
@@ -357,6 +364,10 @@ h1 {
   fill: none;
 }
 
+#timeline{
+  display: block;
+}
+
 
 
 
@@ -369,7 +380,7 @@ h1 {
 
 #videoDiv{
   position: static;
-  height: 100%;
+  height: 725px;
 }
 
 .content {

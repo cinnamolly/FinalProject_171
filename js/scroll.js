@@ -7,9 +7,9 @@ $(document).ready(function () {
         $(document).off("scroll");
 
         $('a').each(function () {
-            $(this).removeClass('active');
+            $(this).removeClass('active-sec');
         });
-        $(this).addClass('active');
+        $(this).addClass('active-sec');
 
         var target = this.hash,
             menu = target;
@@ -29,11 +29,11 @@ function onScroll(event){
         var currLink = $(this);
         var refElement = $(currLink.attr("href"));
         if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
-            $('#navbar ul li a').removeClass("active");
-            currLink.addClass("active");
+            $('#navbar ul li a').removeClass("active-sec");
+            currLink.addClass("active-sec");
         }
         else{
-            currLink.removeClass("active");
+            currLink.removeClass("active-sec");
         }
     });
 }
