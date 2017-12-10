@@ -216,7 +216,7 @@ function updateVis(){
                 .style("opacity", .9)
             div.html(st+ "<br/> Incidents: " + incidentByState[st])
                 .style("top", (d3.event.pageY-8550)+"px")
-                .style("left",(d3.event.pageX)+"px");;
+                .style("left",(d3.event.pageX)+"px");
             console.log("OUTPUT");
 
         })
@@ -361,8 +361,8 @@ function changeVis(){
                 .duration(200)
                 .style("opacity", .9)
             div.html(st+ "<br/> Incidents: " + incidentByState[st])
-                .style("top", (d3.event.pageY-800)+"px")
-                .style("left",(d3.event.pageX-35)+"px");;
+                .style("top", (d3.event.pageY-8550)+"px")
+                .style("left",(d3.event.pageX)+"px");
         })
         .on("mouseout",function(d){
             div.transition()
@@ -475,8 +475,8 @@ function changeVis1(){
                 .duration(200)
                 .style("opacity", .9)
             div.html(st+ "<br/> Incidents: " + incidentByState[st])
-                .style("top", (d3.event.pageY-800)+"px")
-                .style("left",(d3.event.pageX-35)+"px");;
+                .style("top", (d3.event.pageY-8550)+"px")
+                .style("left",(d3.event.pageX)+"px");
         })
         .on("mouseout",function(d){
             div.transition()
