@@ -6,6 +6,9 @@
 .label3{
   font-size: 9px;
 }
+.label4{
+  font-size: 9px;
+}
 
 .image {
   display: block;
@@ -361,8 +364,11 @@ h2 {
 
 /* video */
 #myVideo {
-  width: 100%;
+  position: fixed;
   right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
 
 }
 
@@ -375,7 +381,22 @@ h2 {
   border-right: solid;
   border-right-color: crimson;
   position: absolute;
-  top: 425px; right: 0; bottom: 0; left: 0;
+  top: 425px; right: 0px; bottom: 0; left: 0px;
+}
+
+
+
+
+.content-main {
+  background: rgba(0, 0, 0, 0.3);
+  color: #f1f1f1;
+  width: 30%;
+  height: 700px;
+  padding: 20px;
+  border-right: solid;
+  border-right-color: crimson;
+  position: absolute;
+  top: -600px; right: -200px; bottom: 200px; left: 600px;
 }
 
 
