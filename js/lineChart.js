@@ -139,7 +139,7 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
         .transition()
         .duration(1000)
         .attr("x", 665)
-        .attr("y", 0)
+        .attr("y", -7)
         .attr("fill", "white")
         .text(function(d){
             if (vis.selected === 'DAMAGE'){
@@ -196,7 +196,7 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
 
     vis.svg.append("text")
         .attr("fill", "white")
-        .attr("y", 0)
+        .attr("y", -7)
         .attr("x",-60)
         .text("VARIANCE");
 
