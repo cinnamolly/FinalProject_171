@@ -97,7 +97,7 @@ LineChart.prototype.initVis = function() {
 
 LineChart.prototype.updateVis = function(selected, selectedState) {
     var colors =["#152394", "#06a7a4"]
-    var list = ["Severe Weather", "Climate Variance"]
+    var list = ["Climate Variance", "Severe Weather"]
 
     var data_test = [1];
     var vis = this;
@@ -148,6 +148,28 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
             return vis.selected;
         });
 
+    var t3 = vis.svg.selectAll(".label4")
+        .data(data_test);
+    t3.enter().append("text")
+        .attr("class", "label4")
+        .merge(t3)
+        .transition()
+        .duration(1000)
+        .attr("x", 74)
+        .attr("y", -24)
+        .attr("fill", "white")
+        .text(function(d){
+            if (vis.selected === 'DAMAGE'){
+                return "Damage"
+            }
+            else if (vis.selected === 'DEATHS'){
+                return "Deaths"
+            }
+            else{
+                return "Injuries"
+            }
+        });
+
     var t2 = vis.svg.selectAll(".label3")
         .data(list);
     t2.enter().append("text")
@@ -165,6 +187,7 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
         });
 
     t.exit().remove();
+    t3.exit().remove();
     vis.svg.append("text")
         .attr("fill", "white")
         .attr("y", 340)
@@ -403,16 +426,16 @@ LineChart.prototype.pic3 = function ()
         txt = vis.svg.append("text")
             .attr("class", "label")
             .attr("fill", "white")
-            .attr("x", 200)
+            .attr("x", 160)
             .attr("y", 30)
             //.attr("dy", "0em")
-            .html("We can see that during Hurricane Katrina");
+            .html("We can see that during Hurricane Katrina there was");
         txt2 = vis.svg.append("text")
             .attr("class", "label")
             .attr("fill", "white")
-            .attr("x", 200)
+            .attr("x", 160)
             .attr("y", 42)
-            .html("there was an uptick in weather variance.")
+            .html("an uptick in climate variance surrounding the event.")
         circ= vis.svg.append("circle")       // attach a circle
             .attr("cx", 470)          // position the x-centre
             .attr("cy", 30)          // position the y-centre

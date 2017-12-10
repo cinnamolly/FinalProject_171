@@ -29,7 +29,7 @@ function onScroll(event){
         var currLink = $(this);
         var refElement = $(currLink.attr("href"));
         if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
-            //$('#navbar ul li a').removeClass("active");
+            $('#navbar ul li a').removeClass("active");
             currLink.addClass("active");
         }
         else{
