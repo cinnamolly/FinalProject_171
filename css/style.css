@@ -63,7 +63,7 @@ body{
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */
-  z-index: 1000;
+  z-index: 1001;
   box-shadow: 3px 3px 3px 3px black;
 }
 
@@ -88,11 +88,11 @@ body{
 
 #navbar .activesec{
   border-bottom: solid;
-  border-bottom-color: crimson;
+  border-bottom-color: #06A7A4;
 }
 #navbar .activesec:after{
   border-bottom: solid;
-  border-bottom-color: crimson;
+  border-bottom-color: #06A7A4;
 }
 .specstorm .activesec{
   color: transparent;
@@ -280,6 +280,10 @@ h1 {
   background-size: cover;
   position: relative;
   height:700px;
+}
+
+#newspaper h5{
+  top: 50px;
 }
 
 .visual1{
@@ -525,4 +529,9 @@ h1 {
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+.form-inline .form-group{
+  top: 50px;
+  display: flex;
 }
