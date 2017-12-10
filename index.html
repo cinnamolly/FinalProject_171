@@ -400,13 +400,14 @@
 		<br/>
 			<h5>Use the timeline to change year, and hover over states to see the number of severe weather events that have happened in that particular state during that year.</h5>
 <br/>
-			<h5>Interact further by clikcing the buttons below - you can filter severe weather events to look at specific types,
+			<h5>Interact further by clicking the buttons below - you can filter severe weather events to look at specific types,
 				hide weather events to focus just on climate variance, or transition the map to a bar-chart of states based on how
 				many severe weather events have occurred in that year.
 			</h5>
-			<form class="form">
+			<form class="form-inline">
 				<div class="form-group">
-					<label for="ranking">Filter by</label>
+					<label for="ranking" id="ranking-text">Filter by: </label>
+				<br/>
 					<select class="form-control" id="ranking" onchange="updateVis()">
 						<option value="all">All Events</option>
 						<option value="Blizzard">Blizzard</option>
