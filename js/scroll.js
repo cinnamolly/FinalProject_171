@@ -25,13 +25,9 @@ $(document).ready(function () {
 
 function onScroll(event){
     var scrollPos = $(document).scrollTop();
-    console.log("Scroll position is: " + scrollPos);
     $('#navbar ul li a').each(function () {
         var currLink = $(this);
         var refElement = $(currLink.attr("href"));
-        console.log(currLink.attr("href"));
-        console.log("Top position is: " + refElement.position().top);
-        console.log("Top position is: " + refElement.position().top);
         if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
             //$('#navbar ul li a').removeClass("active");
             currLink.addClass("active");
