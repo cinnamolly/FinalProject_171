@@ -211,12 +211,12 @@ function updateVis(){
         })
         .on("mouseover", function(d){
             var st = states_alpha[d.id]
-            // div.transition()
-            //     .duration(200)
-            //     .style("opacity", .9)
+            div.transition()
+                .duration(200)
+                .style("opacity", .9)
             div.html(st+ "<br/> Incidents: " + incidentByState[st])
-                .style("top", (d3.event.pageY-800)+"px")
-                .style("left",(d3.event.pageX-35)+"px");;
+                .style("top", (d3.event.pageY-8550)+"px")
+                .style("left",(d3.event.pageX)+"px");;
             console.log("OUTPUT");
 
         })
