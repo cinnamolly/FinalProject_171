@@ -370,6 +370,11 @@ h1 {
   padding-right: 0.5cm;
 }
 
+.bottom-bar{
+  font-size: 9px;
+  color: gray;
+}
+
 .line-visual{
   border-left: solid;
   border-left-color: #D82492;
