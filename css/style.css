@@ -282,8 +282,17 @@ h1 {
   height:700px;
 }
 
-#newspaper h5{
-  top: 50px;
+#newspaper h2{
+  margin-top: 125px;
+}
+
+#theCarousel{
+  margin-top: 0;
+
+}
+
+#storms h2{
+  margin-top:125px;
 }
 
 .visual1{
@@ -332,12 +341,13 @@ h1 {
 
 .area-visual{
   border-left: solid;
-  border-left-color: #D82492;
+  border-left-color: #152394;
 }
 
 .area-text{
   border-right: solid;
-  border-right-color: #D82492;
+  border-right-color: #152394;
+
 }
 
 .area-text h3{
@@ -347,9 +357,9 @@ h1 {
 
 .line-visual{
   border-left: solid;
-  border-left-color: #152394;
+  border-left-color: #D82492;
   border-right: solid;
-  border-right-color: #152394;
+  border-right-color: #D82492;
 }
 
 .line-chart {
@@ -358,12 +368,12 @@ h1 {
 
 .line-text1{
   border-right: solid;
-  border-right-color: #152394;
+  border-right-color: #D82492;
   z-index: 1000;
 }
 .line-text2{
   border-left: solid;
-  border-left-color: #152394;
+  border-left-color: #D82492;
   z-index: 1000;
 }
 
@@ -419,8 +429,6 @@ h1 {
   width: 100%;
   height: 800px;
   padding: 20px;
-  border-right: solid;
-  border-right-color: crimson;
   position: absolute;
   top: 0px; right: 0; bottom: 0; left: 0;
 }
@@ -530,10 +538,6 @@ h1 {
 }
 
 
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-}
 
 .form-inline .form-group{
   top: 50px;
@@ -547,3 +551,19 @@ h1 {
   margin-left: auto;
   margin-right: 20px;
 }
+
+.arrow{
+  font-size:40px;
+  color: white;
+  opacity: 0.7;
+}
+
+.arrow:hover{
+  color:white;
+  fill-opacity: 1.0;
+}
+
+#areachartsection, #damagesection{
+  padding-top:90px;
+}
+>>>>>>> f2e631f9e7f48919c6d9a6e6c7801b1553ca48f2

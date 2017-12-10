@@ -253,6 +253,6 @@ StackedAreaChart.prototype.updateVis = function(){
 
 
 	// Call axis functions with the new domain 
-	vis.svg.select(".x-axis").call(vis.xAxis);
-    vis.svg.select(".y-axis").call(vis.yAxis);
+	vis.svg.select(".x-axis").transition().duration(1000).call(vis.xAxis);
+    vis.svg.select(".y-axis").transition().duration(1000).call(vis.yAxis);
 }
