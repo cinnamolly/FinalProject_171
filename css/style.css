@@ -86,15 +86,21 @@ body{
   display: inline;
 }
 
-.active-sec{
-  color: red;
+#navbar .activesec{
   border-bottom: solid;
-  border-bottom-color: red;
+  border-bottom-color: crimson;
 }
-.active-sec:after{
-  color: red;
+#navbar .activesec:after{
   border-bottom: solid;
-  border-bottom-color: red;
+  border-bottom-color: crimson;
+}
+.specstorm .activesec{
+  color: transparent;
+  border-bottom: none;
+}
+.specstorm .activesec:after{
+  color: transparent;
+  border-bottom: none;
 }
 
 #opening{
@@ -264,6 +270,15 @@ h1 {
 
 .row-fluid{
   height: 110%;
+}
+
+#newspaper{
+  background-image: url("../img/banner-newspaper.jpg");
+  background-attachment: fixed;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
 
 .visual1{

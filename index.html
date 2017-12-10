@@ -17,7 +17,7 @@
 
 <div id="navbar">
 	<ul>
-	<li><a href="#overview" class="active-sec">Overview</a></li>
+	<li><a href="#overview" class="activesec">Overview</a></li>
 	<li><a href="#uptick">Uptick in Weather Events</a></li>
 		<li><a href="#newspaper">What the News is Saying</a></li>
 		<li><a href="#damage">Damage</a></li>
@@ -306,7 +306,7 @@
 					</select>
 				</div>
 			</form>
-			<div class = "line-chart"></div>
+			<div class = "line-chart" id="chart"></div>
 		</div>
 		<div class= "col-md-2 text line-text2">
 			<h5>Text: Damage ($)</h5>
@@ -329,7 +329,7 @@
 				</div>
 				</div>
 			<br>
-			<a href="#damage"><button class="button" onclick="pic1()">Investigate Climate</button></a>
+			<a href="#chart" class="specstorm"><button class="button" onclick="pic1()">Investigate Climate</button></a>
 			<br>
 			<img src = "img/newjersey.jpg" id = "img" style="display:none;"/>
 			<br>
@@ -342,7 +342,7 @@
 					<div class="text3">Date: May 22, 2011 <br> Damage: $2.8 billion <br> Fatalities: 161</div>
 				</div></div>
 			<br>
-			<a href="#damage"><button class="button" onclick="pic2()">Investigate Climate</button></a>
+			<a href="#chart" class="specstorm"><button class="button" onclick="pic2()">Investigate Climate</button></a>
 			<br>
 			<img src = "img/missouri.jpg" id = "img2" style="display:none;"/>
 			<br>
@@ -355,7 +355,7 @@
 					<div class="text3">Date: August 23, 2005 <br> Damage: $108 billion <br> Fatalities: 1,833</div>
 				</div></div>
 			<br>
-			<a href="#damage"><button class="button" onclick="pic3()">Investigate Climate</button></a>
+			<a href="#chart" class="specstorm"><button class="button" onclick="pic3()">Investigate Climate</button></a>
 			<br>
 			<img src = "img/louisiana.jpg" id = "img3" style="display:none;"/>
 			<br>
