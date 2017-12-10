@@ -128,7 +128,7 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
         .data(colors)
         .enter()
         .append("rect")
-        .attr("x", -50)
+        .attr("x", -60)
         .attr("y", function(d,i){
             return -40+18*i;
         })
@@ -162,7 +162,7 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
         .merge(t3)
         .transition()
         .duration(1000)
-        .attr("x", 56)
+        .attr("x", 46)
         .attr("y", -10)
         .attr("fill", "white")
         .style("font-size", 12)
@@ -188,7 +188,7 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
         .merge(t2)
         .transition()
         .duration(1000)
-        .attr("x", -30)
+        .attr("x", -40)
         .attr("y", function(d,i){
             return -28+18*i;
         })
