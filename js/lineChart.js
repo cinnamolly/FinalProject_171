@@ -71,6 +71,13 @@ LineChart.prototype.initVis = function() {
         .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
+    // SVG drawing area
+    vis.svg2 = d3.select(".line-text2").append("svg")
+        .attr("width", vis.width + vis.margin.left + vis.margin.right)
+        .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+
     // Scales and axes
     vis.x = d3.scaleTime()
         .range([0, vis.width])
@@ -96,7 +103,7 @@ LineChart.prototype.initVis = function() {
 
 
 LineChart.prototype.updateVis = function(selected, selectedState) {
-    var colors =["#152394", "#06a7a4"]
+    var colors =["#D82492", "#06a7a4"]
     var list = ["Climate Variance", "Severe Weather"]
 
     var data_test = [1];
@@ -117,20 +124,20 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
     //     .style("fill", "none");
     vis.selected = selected;
     vis.selectedState = selectedState;
-    var rect = vis.svg.selectAll("rect")
+    var rect = vis.svg2.selectAll("rect")
         .data(colors)
         .enter()
         .append("rect")
-        .attr("x", 0)
+        .attr("x", -50)
         .attr("y", function(d,i){
-            return -40+9*i;
+            return -40+18*i;
         })
         .attr("fill", function(d){
             return d;
         })
         .attr("stroke", "black")
-        .attr("height", 7)
-        .attr("width", 7);
+        .attr("height", 15)
+        .attr("width", 15);
     var t = vis.svg.selectAll(".label2")
         .data(data_test);
     t.enter().append("text")
@@ -148,40 +155,45 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
             return vis.selected;
         });
 
-    var t3 = vis.svg.selectAll(".label4")
+    var t3 = vis.svg2.selectAll(".label4")
         .data(data_test);
     t3.enter().append("text")
         .attr("class", "label4")
         .merge(t3)
         .transition()
         .duration(1000)
-        .attr("x", 74)
-        .attr("y", -24)
+        .attr("x", 56)
+        .attr("y", -10)
         .attr("fill", "white")
+        .style("font-size", 12)
         .text(function(d){
             if (vis.selected === 'DAMAGE'){
-                return "Damage"
+                console.log(vis.selected);
+                return "Damage";
             }
             else if (vis.selected === 'DEATHS'){
-                return "Deaths"
+                console.log(vis.selected);
+                return "Deaths";
             }
             else{
-                return "Injuries"
+                console.log(vis.selected);
+                return "Injuries";
             }
         });
 
-    var t2 = vis.svg.selectAll(".label3")
+    var t2 = vis.svg2.selectAll(".label3")
         .data(list);
     t2.enter().append("text")
         .attr("class", "label3")
         .merge(t2)
         .transition()
         .duration(1000)
-        .attr("x", 10)
+        .attr("x", -30)
         .attr("y", function(d,i){
-            return -33+9*i;
+            return -28+18*i;
         })
         .attr("fill", "white")
+        .style("font-size", 12)
         .text(function(d){
             return d
         });
@@ -244,7 +256,7 @@ LineChart.prototype.updateVis = function(selected, selectedState) {
 
     line1.enter().append("path")
         .attr("id", "line")
-        .attr("stroke", "#152394")
+        .attr("stroke", "#D82492")
         .attr("stroke-width", 3)
         .merge(line1).transition().duration(1000)
         .attr("d", vis.valueline);
