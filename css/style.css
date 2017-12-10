@@ -337,6 +337,16 @@ h1 {
   border-left-color: #06A7A4;
 }
 
+#ranking-text{
+  margin-left:120px;
+}
+
+#ranking{
+  width:150px;
+  margin-right:125px;
+  margin-left: auto;
+}
+
 .choro-text h5{
   text-align: center;
   margin: 0.2cm;
