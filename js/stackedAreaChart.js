@@ -240,6 +240,7 @@ StackedAreaChart.prototype.updateVis = function(){
             return colorScale(dataCategories[i]);
         })
         .transition()
+        .duration(1000)
         .attr("d", function(d) {
             return vis.area(d);
         });
