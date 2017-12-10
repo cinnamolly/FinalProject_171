@@ -394,3 +394,69 @@ h2 {
   background: #ddd;
   color: black;
 }
+
+
+/*News Stories Carousel*/
+.multi-item-carousel .carousel-inner .item{
+  transition: 500ms ease-in-out left;
+
+}
+
+.multi-item-carousel .carousel-inner .item .col-xs-4 {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.multi-item-carousel .carousel-inner .item .active .left{
+  left:-33%;
+}
+
+.multi-item-carousel .carousel-inner .item .active .right{
+  left: 33%;
+}
+
+.multi-item-carousel .carousel-inner .item .active .next{
+  left:33%;
+}
+
+.multi-item-carousel .carousel-inner .item .active .prev{
+  left:-33%;
+}
+
+.multi-item-carousel @media all and (transform-3d), (-webkit-transform-3d) {
+  > .item{
+  // use your favourite prefixer here
+  transition: 500ms ease-in-out left;
+    transition: 500ms ease-in-out all;
+    backface-visibility: visible;
+    transform: none!important;
+  }
+}
+
+
+.multi-item-carousel  .carouse-control .right{
+  background-image: none;
+}
+
+.multi-item-carousel  .carouse-control .left{
+  background-image: none;
+}
+
+.carousel-caption {
+  background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 4%, rgba(0,0,0,0.5) 32%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(4%,rgba(0,0,0,0.1)), color-stop(32%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 4%,rgba(0,0,0,0.5) 32%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 4%,rgba(0,0,0,0.5) 32%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 4%,rgba(0,0,0,0.5) 32%,rgba(0,0,0,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 4%,rgba(0,0,0,0.5) 32%,rgba(0,0,0,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+  width: 100%;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  text-align: left;
+  padding-top: 5px;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
