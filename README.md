@@ -51,9 +51,9 @@ topojson.min.js
  scroll.js
 
  sectionscroll.js
- 
+
 
 ## Data
-
+GeoJSON file gz_2010_us_outline_20m.json was adapted from <http://eric.clst.org/Stuff/USGeoJSON>.  All CSV and JSON data was processed from data taken from [The National Climactic Data Center](https://www.ncdc.noaa.gov/) and the [National Oceanic and Atmospheric Administration](http://www.noaa.gov/weather).
 
 
