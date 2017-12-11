@@ -23,12 +23,19 @@ font-awesome.min.css
 
 ### /js
 bootstrap.min.js
+
 counter.js
+
 d3.js
-d3-rect.min.ls
+
+d3-rect.min.js
+
 flubber.min.js
+
 jquery.min.js
-queue.min.ks
+
+queue.min.js
+
 topojson.min.js
 
 ## Code adapted from examples
