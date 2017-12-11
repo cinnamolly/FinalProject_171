@@ -304,6 +304,11 @@ h1 {
           0px 0px 9px 1px#0F1216;
 }
 
+#stormsection .visual1{
+  box-shadow:
+          15px 0px 6px 1px #0F1216;
+}
+
 .text{
   height:500px;
   overflow: hidden;
@@ -603,3 +608,4 @@ h1 {
 #myCheckbox {
   margin-left: -50px;
 }
+
