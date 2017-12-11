@@ -36,8 +36,6 @@ function loadCsvData(){
                 areaData = file1.data;
                 climateData = file2;
                 allData = file3;
-
-                console.log(file1);
             }
 
             createVis();
@@ -105,6 +103,5 @@ function lineUpdate() {
     var selected = d3.select("#ranking-type").property("value");
 
     var selectedState = d3.select("#state-type").property("value");
-    console.log(selectedState)
     line.updateVis(selected, selectedState);
 }

@@ -12,9 +12,6 @@ StackedAreaChart = function(_parentElement, _data){
     this.altered_data = _data;
     this.displayData = []; // see data wrangling
 
-    // DEBUG RAW DATA
-    console.log("Loaded");
-
     this.initVis();
 }
 
@@ -55,8 +52,6 @@ StackedAreaChart.prototype.initVis = function(){
         vis.altered_data.push(obj);
     }
     **/
-
-    console.log(JSON.stringify(vis.altered_data));
 
   // SVG drawing area
 	vis.svg = d3.select("#" + vis.parentElement).append("svg")
