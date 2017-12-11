@@ -329,7 +329,7 @@
 <div class="container-fluid data" id="storms">
 	<div class = "row-fluid lit">
 		<div class = "col-md-12">
-			<div class="section"><h2>Major Storms</h2><h5>Hover to find out more.</h5></div>
+			<div class="section"><h2>Major Storms</h2><h5>Hover to find out more.</h5><h5> Click "Investigate Climate" to see the relation between each storm and climate variance above.</h5></div>
 		</div>
 	</div>
 	<div class = "row-fluid lit" id="stormsection">
@@ -381,17 +381,20 @@
 	<div class="hero-image overview">
 		<div class="hero-text">
 			<h1>Climate Change</h1><h3> “There’s one issue that will define the contours of this century more dramatically than any other, and that is the urgent threat of a changing climate.”</h3><h5>Barack Obama, Former President of the United States of America</h5>
-			<a class="arrow" href="#climatechangesection">&#8744;</a></div>
+			<a class="arrow" href="#climatechangesection">&#8744;</a>
+		</div>
 	</div>
 	<div class = "row-fluid lit" id="climatechangesection">
 		<div class= "col-sm-8 visual1 choro-visual">
 			<h4>State Temperature Change and Weather Events by Year</h4>
 
+			<div id="dateRange-text">
+				<label for="dateRange"
+					   style="display: inline-block; width: 240px; text-align: center">
+					Year: <span id="dateRange-value"></span>
+				</label>
+			</div>
 
-			<label for="dateRange"
-				   style="display: inline-block; width: 240px; text-align: right">
-				Year: <span id="dateRange-value"></span>
-			</label>
 			<input type="range" step='1' min="0" max="36" id="dateRange" onchange=updateVis()>
 			<div class = "choropleth">
 				<div id="choro"></div>
@@ -408,7 +411,9 @@
 					hide weather events to focus just on climate variance, or transition the map to a bar-chart of states based on how
 					many severe weather events have occurred in that year.
 				</p>
+				<br>
 				<h6>Disclaimer: We are taking a random sampling of the severe weather occurences per year due to the dataset size, and certain weather events were not properly documented over the years.</h6>
+				<br>
 			</div>
 			<form class="form-inline">
 				<div class="form-group">
@@ -428,22 +433,26 @@
 					</select>
 				</div>
 			</form>
-			<input type="checkbox" id="myCheckbox" onclick="updateVis()"> Hide Events
-			<button class= "button" id=button onclick="visTrans()">Bar Chart</button>
+			<br>
+			<div id="choro-manipulate">
+				<input type="checkbox" id="myCheckbox" onclick="updateVis()"> Hide Events
+				<button class= "button" id=button onclick="visTrans()">Bar Chart</button>
+			</div>
 		</div>
 	</div>
-	<div class="container-fluid data">
-		<div class= "col-sm-2"></div>
-			<div class= "col-sm-8">
-				<div class="bottom-bar">
-				<br/>
-					This project was created as a collaboration between Molly Cinnamon, Kyle Devine, and Frances Shapiro.<br/>
-					Data was collected from The National Climactic Data Center and the National Oceanic and Atmospheric Administration.
-					<br/>
-				</div>
+</div>
+<div class="container-fluid data">
+	<div class= "col-sm-2"></div>
+	<div class= "col-sm-8">
+		<div class="bottom-bar">
+			<br/>
+				<p>This project was created in 2017 as a collaboration between Molly Cinnamon, Kyle Devine, and Frances Shapiro for Harvard CS171.<br/>
+					Data was collected from <a href="https://www.ncdc.noaa.gov/">The National Climactic Data Center</a> and the <a href="http://www.noaa.gov/weather">National Oceanic and Atmospheric Administration.</a>
+				</p>
+		</div>
+	</div>
 	<div class= "col-sm-2"></div>
 
-	</div>
 </div>
 
 	<!-- Load JS libraries -->
