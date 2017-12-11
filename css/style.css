@@ -338,18 +338,15 @@ h1 {
 }
 
 #ranking-text{
-  margin-left:120px;
+  margin-left:90px;
+  margin-right: 10px;
+  margin-top: 4px;
 }
 
 #ranking{
   width:150px;
   margin-right:125px;
   margin-left: auto;
-}
-
-.choro-text h5{
-  text-align: center;
-  margin: 0.2cm;
 }
 
 .area-visual{
@@ -366,6 +363,16 @@ h1 {
 .area-text h3{
   text-align: right;
   padding-right: 0.5cm;
+}
+
+.area-text h5{
+  text-align: right;
+  padding-right: 0.5cm;
+}
+
+.bottom-bar{
+  font-size: 9px;
+  color: gray;
 }
 
 .line-visual{
@@ -580,4 +587,19 @@ h1 {
 
 #areachartsection, #damagesection{
   padding-top:90px;
+}
+
+#choro-instructions {
+  margin-top: -30px;
+  margin-left: 40px;
+  margin-right: 40px;
+  text-align: left;
+}
+
+#button {
+  margin-left: 12px;
+}
+
+#myCheckbox {
+  margin-left: -50px;
 }
