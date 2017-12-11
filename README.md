@@ -10,15 +10,20 @@ style.css
 
 ### /js
 americaClimate.js
+
 lineChart.js
+
 main.js
+
 stackedAreaChart.js
+
 timeline.js
 
 ## Libraries
 
 ### /css
 bootstrap.min.css
+
 font-awesome.min.css
 
 ### /js
@@ -42,8 +47,11 @@ topojson.min.js
 
 /js
  newScroll.js
+
  scroll.js
+
  sectionscroll.js
+ 
 
 ## Data
 
