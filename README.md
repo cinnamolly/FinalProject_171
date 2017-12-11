@@ -45,7 +45,7 @@ topojson.min.js
 
 ## Code adapted from online examples
 
-/js
+### /js
  [newScroll.js] (https://stanhub.com/sticky-header-change-navigation-active-class-on-page-scroll-with-jquery/)
 
  [scroll.js] (https://stanhub.com/sticky-header-change-navigation-active-class-on-page-scroll-with-jquery/)
