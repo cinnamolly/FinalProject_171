@@ -215,7 +215,7 @@ function updateVis(){
                 .duration(200)
                 .style("opacity", .9)
             div.html(st+ "<br/> Incidents: " + incidentByState[st])
-                .style("top", (d3.event.pageY-5570)+"px")
+                .style("top", (d3.event.pageY-5680)+"px")
                 .style("left",(d3.event.pageX)+"px");
 
 
@@ -366,7 +366,7 @@ function changeVis(){
                 .duration(200)
                 .style("opacity", .9)
             div.html(st+ "<br/> Incidents: " + incidentByState[st])
-                .style("top", (d3.event.pageY-5570)+"px")
+                .style("top", (d3.event.pageY-5680)+"px")
                 .style("left",(d3.event.pageX)+"px");
         })
         .on("mouseout",function(d){
@@ -391,10 +391,10 @@ function changeVis(){
                     h = 1;
                 }
                 dimensions = {
-                    x: 10 * i + 150,
+                    x: 12 * i + 140,
                     y: height - h,
                     height: h,
-                    width: 5
+                    width: 9
                 };
 
                 console.log(dimensions)
@@ -485,7 +485,7 @@ function changeVis1(){
                 .duration(200)
                 .style("opacity", .9)
             div.html(st+ "<br/> Incidents: " + incidentByState[st])
-                .style("top", (d3.event.pageY-5570)+"px")
+                .style("top", (d3.event.pageY-5680)+"px")
                 .style("left",(d3.event.pageX)+"px");
         })
         .on("mouseout",function(d){
@@ -510,10 +510,10 @@ function changeVis1(){
                     h = 1;
                 }
                 dimensions = {
-                    x: 10 * i + 150,
+                    x: 12 * i + 140,
                     y: height - h,
                     height: h,
-                    width: 5
+                    width: 9
                 };
 
                 console.log(dimensions)
