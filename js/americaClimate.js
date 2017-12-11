@@ -275,7 +275,7 @@ function updateVis(){
     map.exit().remove();
 
 
-    d3.select("svg").selectAll("rect")
+    d3.select(".choropleth svg").selectAll("rect")
         .data(color.range())
         .enter()
         .append("rect")
@@ -289,7 +289,7 @@ function updateVis(){
         .attr("height", 30)
         .attr("width", 30);
 
-    d3.select("svg")
+    d3.select(".choropleth svg")
         .append("circle")
         .attr("cx", 640)
         .attr("cy", 50)
