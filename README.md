@@ -3,6 +3,10 @@
 
 ## Project Website
 ### <http://cinnamolly.github.io/FinalProject_171>
+#### Note: Please take time to let banner video load in the beginning.  Github is slow to run it.
+
+## Video Link
+### <https://youtu.be/HLrfy4wGqDA>
 
 ## Code
 ### /css
